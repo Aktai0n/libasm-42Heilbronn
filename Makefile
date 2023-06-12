@@ -65,7 +65,8 @@ re: fclean all
 
 bonus: all
 
-test: $(NAME) $()
+test: all
+	$(shell bash $(TEST_DIR)/run.sh)
 
 
 .PHONY: $(NAME) all clean fclean re bonus
