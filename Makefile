@@ -4,17 +4,18 @@
 NAME = libasm.a
 
 # assembler config
-ASM = nasm
-ASM_FLAGS = -f elf32
+AS = nasm
+# -f elf64 for linux, -f macho64 for MacOS
+ASFLAGS = -f elf64 -wall
 
 # linker config
 LD = ld
 # -m elf_i386 = architecture
-LD_FLAGS = -m elf_i386
+LDFLAGS = 
 
 # archive (library) config
 AR = ar
-AR_FLAGS = rcs
+ARFLAGS = rcs
 
 # compiler config
 CC = cc
@@ -38,19 +39,10 @@ OBJ = $(patsubst $(SDIR)/%.s, $(ODIR)/%.o, $(SRC_FULL))
 TEST_DIR = test
 TEST_SRC = $(wildcard $(TEST_DIR)/*.c)
 
-# -------------------- util rules -----------------------
-
-# copy the directory tree from $(SDIR) to $(ODIR)
-$(ODIR):
-	$(MKDIR) $(patsubst $(SDIR)/%, $(ODIR)/% , $(shell find $(SDIR)/ -type d))
-
-$(ODIR)/%.o: $(SDIR)/%.s
-	$(ASM) $(ASM_FLAGS) $< -o $@ -I $(IDIR)
-
 # -------------------- public rules ---------------------
 
 $(NAME): $(ODIR) $(OBJ)
-	$(AR) $(AR_FLAGS) $@ $(OBJ)
+	$(AR) $(ARFLAGS) $@ $(OBJ)
 
 
 all: $(NAME)
@@ -70,3 +62,12 @@ test: all
 
 
 .PHONY: $(NAME) all clean fclean re bonus
+
+# -------------------- util rules -----------------------
+
+# copy the directory tree from $(SDIR) to $(ODIR)
+$(ODIR):
+	$(MKDIR) $(patsubst $(SDIR)/%, $(ODIR)/% , $(shell find $(SDIR)/ -type d))
+
+$(ODIR)/%.o: $(SDIR)/%.s
+	$(AS) $(ASFLAGS) $< -o $@ -I $(IDIR)
