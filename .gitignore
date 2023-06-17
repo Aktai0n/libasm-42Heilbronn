@@ -1,2 +1,3 @@
 build/
 libasm.a
+*.out

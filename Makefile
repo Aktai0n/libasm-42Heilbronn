@@ -1,12 +1,22 @@
 
 # -------------------- config -------------------------
 
-NAME = libasm.a
+NAME := libasm.a
+
+OS := $(shell uname -s)
 
 # assembler config
 AS = nasm
-# -f elf64 for linux, -f macho64 for MacOS
-ASFLAGS = -f elf64 -wall
+ASFLAGS = -wall
+
+ifeq ($(OS), Darwin) # MacOS
+ASFLAGS += -f macho64 -dMACOS=1
+else ifeq ($(OS), Linux) # Linux
+ASFLAGS += -f elf64 -dLINUX=1
+else
+$(error Unsupported operating system: $(OS))
+endif
+
 
 # linker config
 LD = ld
