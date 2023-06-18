@@ -1,3 +1,8 @@
+# build files
 build/
 libasm.a
 *.out
+
+# system files
+.vscode
+.DS_Store
