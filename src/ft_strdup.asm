@@ -52,6 +52,5 @@ ft_strdup:
 .RETURN_ZERO:
     mov rsp, rbp ; function epilogue
     pop rbp
-
     xor rax, rax
     ret ; return NULL

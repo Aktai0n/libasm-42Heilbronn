@@ -37,10 +37,19 @@ MKDIR = mkdir -p
 
 # -------------------- dependencies ---------------------
 
-SRC = ft_write.asm ft_read.asm ft_strcmp.asm ft_strcpy.asm \
-      ft_strdup.asm ft_strlen.asm
+SRC_BONUS = ft_atoi_base.asm
+SDIR_BONUS = bonus
+
+SRC = ft_write.asm \
+      ft_read.asm \
+      ft_strcmp.asm \
+      ft_strcpy.asm \
+      ft_strdup.asm \
+      ft_strlen.asm \
+      $(addprefix $(SDIR_BONUS)/, $(SRC_BONUS))
 SDIR = src
 SRC_FULL = $(addprefix $(SDIR)/, $(SRC))
+
 
 IDIR = inc
 
