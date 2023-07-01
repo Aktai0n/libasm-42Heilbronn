@@ -13,7 +13,6 @@ extern GET_ERRNO
 ;   base = rsi
 ; Register layout:
 ;   rcx = copy of str
-;   r8 = copy of base
 ;   r9 = base_len
 ;   r10 = sign
 ; Stack layout:
@@ -40,25 +39,26 @@ ft_atoi_base:
 ; --------------- validate the base --------------
 
     cmp r9, 1 ; base_len <= 1
-    jbe .RETURN_ZERO
+    jbe .INVALID_BASE
 
     xor rcx, rcx ; size_t i = 0
     .LOOP1:
         movzx edx, BYTE [rsi + rcx] ; c = base[i]
         cmp dl, 43 ; c == '+'
-        je .RETURN_ZERO
+        je .INVALID_BASE
         cmp dl, 45 ; c == '-'
-        je .RETURN_ZERO
+        je .INVALID_BASE
         mov edi, edx
         call ft_isspace
-        mov rdi, [rbp + 0] ; restore str
+        mov rdi, [rbp + 0] ; restore str <-- can probably be removed
         test al, al ; check base[i] for spacing character
-        jz .RETURN_ZERO
+        jz .INVALID_BASE
 
         lea rax, [rcx + 1] ; size_t j = i + 1
+        mov dl, BYTE [rsi + rcx] ; char c = base[i]
         .LOOP2:
-            cmp BYTE [rsi + rcx], BYTE [rsi + rax] ; base[i] == base[j]
-            je .RETURN_ZERO
+            cmp dl, BYTE [rsi + rax] ; c == base[j]
+            je .INVALID_BASE
 
             inc rax ; ++j
             cmp rax, r9 ; j != base_len
@@ -99,6 +99,9 @@ ft_atoi_base:
 ; --------------- calculate the number --------------
 
     xor rax, rax ; int result = 0
+    cmp BYTE [rcx], 0 ; *s == '\0'
+    je .BREAK5
+
     .LOOP5:
         xor rdx, rdx ; int digit = 0
         movzx edi, BYTE [rcx] ; char c = *s
@@ -117,10 +120,15 @@ ft_atoi_base:
         jo .OVERFLOW
         add rax, rdx ; result + digit
         jo .OVERFLOW
+        inc rcx ; ++s
+        cmp BYTE [rcx], 0 ; *s == '\0'
+        jne .LOOP5
     .BREAK5:
 
     imul rax, r10 ; result * sign
     jo .OVERFLOW
+
+; --------------- return states --------------
 
     pop rsi ; restore base
     pop rdi ; and str
@@ -133,6 +141,13 @@ ft_atoi_base:
     pop rdi ; and str
     call GET_ERRNO ; set errno to ERANGE
     mov DWORD [rax], ERANGE_ERROR_CODE
+    jmp .RETURN_ZERO
+
+.INVALID_BASE:
+    pop rsi ; restore base
+    pop rdi ; and str
+    call GET_ERRNO ; set errno to EINVAL
+    mov DWORD [rax], EINVAL_ERROR_CODE
 
 .RETURN_ZERO:
     mov rsp, rbp ; function epilogue

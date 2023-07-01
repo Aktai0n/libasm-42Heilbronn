@@ -7,6 +7,7 @@
        %define READ_SYSCALL_CODE 0
        %define GET_ERRNO __errno_location
        %define ERANGE_ERROR_CODE 34
+       %define EINVAL_ERROR_CODE 22
        %define MALLOC malloc
        %define FREE free
 
@@ -15,6 +16,7 @@
        %define READ_SYSCALL_CODE 0x2000003
        %define GET_ERRNO ___error ; check on mac in school!
        %define ERANGE_ERROR_CODE 34 ; check on mac in school!
+       %define EINVAL_ERROR_CODE 22 ; check on mac in school!
        %define MALLOC _malloc
        %define FREE _free
 
