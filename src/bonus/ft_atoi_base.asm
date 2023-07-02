@@ -12,7 +12,8 @@ extern GET_ERRNO
 ;   str = rdi
 ;   base = rsi
 ; Register layout:
-;   rcx = copy of str
+;   rcx = index of or pointer to the current char in str
+;   rax, rdx = used for various temporary values
 ;   r9 = base_len
 ;   r10 = sign
 ; Stack layout:
