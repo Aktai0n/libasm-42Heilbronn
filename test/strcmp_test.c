@@ -2,20 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "libasm.h"
+
 #if 0
 int ft_strcmp(const char* s1, const char* s2) {
     for (size_t i = 0; !(s1[i] == '\0' && s2[i] == '\0'); ++i) {
         if (s1[i] != s2[i]) {
             return (unsigned char)s1[i] - (unsigned char)s2[i];
-        }
-    }
-    return 0;
-}
-#else
-int ft_strcmp(const char* s1, const char* s2) {
-    for (;!(*s1 == '\0' && *s2 == '\0'); ++s1, ++s2) {
-        if (*s1 != *s2) {
-            return (unsigned char)*s1 - (unsigned char)*s2;
         }
     }
     return 0;
@@ -36,7 +29,7 @@ void compare_strcmp(const char* s1, const char* s2) {
     printf("\n");
 }
 
-void strcmp_test() {
+void strcmp_test(void) {
     char stack_string1[] = "42 Heilbronn";
     char* heap_string = malloc(strlen(stack_string1) + 1);
     strcpy(heap_string, stack_string1);
@@ -51,8 +44,11 @@ void strcmp_test() {
     free(heap_string);
 }
 
+#ifdef IS_STANDALONE
 
-int main() {
+int main(void) {
     strcmp_test();
     return 0;
 }
+
+#endif // IS_STANDALONE

@@ -3,6 +3,9 @@ build/
 libasm.a
 *.out
 
+# just temporary
+*.s
+
 # system files
 .vscode
 .DS_Store

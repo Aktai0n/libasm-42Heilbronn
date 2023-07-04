@@ -37,7 +37,11 @@ MKDIR = mkdir -p
 
 # -------------------- dependencies ---------------------
 
-SRC_BONUS = ft_atoi_base.asm
+SRC_BONUS = ft_atoi_base.asm \
+            ft_list_push_front.asm \
+            ft_list_remove_if.asm \
+            ft_list_size.asm \
+            ft_list_sort.asm
 SDIR_BONUS = bonus
 
 SRC = ft_write.asm \
@@ -78,7 +82,8 @@ re: fclean all
 bonus: all
 
 test: all
-	$(shell bash $(TEST_DIR)/run.sh)
+	$(CC) $(CFLAGS) $(NAME) $(TEST_SRC) -o test
+#	$(shell bash $(TEST_DIR)/run.sh)
 
 
 .PHONY: $(NAME) all clean fclean re bonus
