@@ -11,13 +11,13 @@ void compare_strcpy(const char* src) {
     char* std_dest = malloc(src_len + 1);
 
     printf("Testing with:\nsrc = %s, address = %p\n", src, src);
-    char* ft_result = ft_strcpy(ft_dest, src);
     char* std_result = strcpy(std_dest, src);
+    char* ft_result = ft_strcpy(ft_dest, src);
 
-    printf("Destination: ft_strcpy = %s, strcmp = %s\n", ft_dest, std_dest);
-    printf("Return value: ft_strcpy = %s, strcpy = %s\n", ft_dest, std_dest);
+    printf("Destination: ft_strcpy = %s, strcpy = %s\n", ft_dest, std_dest);
+    printf("Return value: ft_strcpy = %s, strcpy = %s\n", ft_result, std_result);
 
-    if (strcpy(ft_dest, std_dest) == 0 && strcpy(ft_dest, std_dest) == 0) {
+    if (strcmp(ft_dest, std_dest) == 0 && strcmp(ft_result, std_result) == 0) {
         printf("Test passed!\n");
     } else {
         printf("Test failed!\n");
@@ -39,7 +39,6 @@ void strcpy_test(void) {
     compare_strcpy(static_string);
     compare_strcpy("");
     compare_strcpy(heap_string);
-    compare_strcpy(NULL);
 
     free(heap_string);
 }

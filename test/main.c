@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    bool test_has_run[11] = {};
+    bool test_has_run[11] = {0};
 
     for (int i = 1; i < argc; ++i) {
         char* param = argv[i];

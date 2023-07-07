@@ -7,7 +7,7 @@ OS := $(shell uname -s)
 
 # assembler config
 AS = nasm
-ASFLAGS = -wall -iinc
+ASFLAGS = -wall -iinc -g
 
 ifeq ($(OS), Darwin) # MacOS
 ASFLAGS += -f macho64 -dMACOS=1
@@ -29,7 +29,7 @@ ARFLAGS = rcs
 
 # compiler config
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Wconversion #-Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g #-Werror
 
 # utils config
 RM = rm -rf
@@ -82,7 +82,7 @@ re: fclean all
 bonus: all
 
 test: all
-	$(CC) $(CFLAGS) $(NAME) $(TEST_SRC) -o test
+	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(NAME) -o tester
 #	$(shell bash $(TEST_DIR)/run.sh)
 
 

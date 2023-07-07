@@ -1,10 +1,9 @@
 #include <string.h>
 #include <stdio.h>
 
-// #include "libasm.h"
-size_t ft_strlen(const char* str);
+#include "libasm.h"
 
-void compare(const char* s) {
+void compare_strlen(const char* s) {
     printf("Testing with %s\n", s);
     size_t ft_len = ft_strlen(s);
     size_t len = strlen(s);
@@ -17,16 +16,11 @@ void compare(const char* s) {
     }
 }
 
-void strlen_test() {
+void strlen_test(void) {
     char stack_string[] = "Hello World";
 
-    compare("Hello World");
-    compare("42");
-    compare("");
-    compare(stack_string);
-}
-
-int main(void) {
-    strlen_test();
-    return 0;
+    compare_strlen("Hello World");
+    compare_strlen("42");
+    compare_strlen("");
+    compare_strlen(stack_string);
 }

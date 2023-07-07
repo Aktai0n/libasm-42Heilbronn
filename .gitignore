@@ -2,6 +2,7 @@
 build/
 libasm.a
 *.out
+tester
 
 # just temporary
 *.s

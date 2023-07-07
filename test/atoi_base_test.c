@@ -79,17 +79,17 @@ void compare_atoi_base(const char* num_string,
     printf("\n");
 }
 
-int main(void) {
-    char decimal[] = "0123456789";
-    char hex[] = "0123456789ABCDEF";
-    char octal[] = "012345678";
-    char binary[] = "01";
-    compare_atoi_base("100", decimal, 100);
-    compare_atoi_base("0", octal, 0);
-    compare_atoi_base("      +++42", decimal, 42);
-    compare_atoi_base("\t\f\v ++-+-30", hex, 48);
-    compare_atoi_base(NULL, binary, 0);
-    compare_atoi_base("something", "0", 0);
-    compare_atoi_base("\t\f\v \r+101010someting else", binary, 42);
-    // printf("%d\n", my_atoi_base("invalid", binary));
-}
+// int main(void) {
+//     char decimal[] = "0123456789";
+//     char hex[] = "0123456789ABCDEF";
+//     char octal[] = "012345678";
+//     char binary[] = "01";
+//     compare_atoi_base("100", decimal, 100);
+//     compare_atoi_base("0", octal, 0);
+//     compare_atoi_base("      +++42", decimal, 42);
+//     compare_atoi_base("\t\f\v ++-+-30", hex, 48);
+//     compare_atoi_base(NULL, binary, 0);
+//     compare_atoi_base("something", "0", 0);
+//     compare_atoi_base("\t\f\v \r+101010someting else", binary, 42);
+//     // printf("%d\n", my_atoi_base("invalid", binary));
+// }

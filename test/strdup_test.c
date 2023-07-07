@@ -19,10 +19,10 @@ char* my_strdup(const char* str) {
     return dest;
 }
 
-void compare_strdup() {
+void compare_strdup(void) {
     
 }
 
-int main() {
-
+void strdup_test(void) {
+    
 }

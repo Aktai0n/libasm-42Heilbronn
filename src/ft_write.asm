@@ -15,11 +15,13 @@ extern GET_ERRNO
 ft_write:
     mov rax, WRITE_SYSCALL_CODE
     syscall
-    test rax, rax ; check for write error
-    jz _set_errno
+    ; test rax, rax ; check for write error
+    ; jz .SET_ERRNO
+    cmp rax, 0
+    jl .SET_ERRNO
     ret
 
-_set_errno:
+.SET_ERRNO:
     push rbp ; function prologue
     mov rbp, rsp
 

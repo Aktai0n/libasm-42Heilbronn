@@ -19,4 +19,5 @@ ft_strcpy:
         cmp dl, 0 ; src[i] == '\0'
         jne .LOOP1
     .BREAK1:
+    mov BYTE [rdi + rcx], 0 ; dest[i] = '\0'
     ret ; return dest
