@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <string.h>
 #include <errno.h>
+#include <string.h>
+#include <unistd.h>
 
-char* ft_strdup(const char*);
+#include "libasm.h"
 
 char* my_strdup(const char* str) {
     if (str == NULL) {
@@ -19,10 +21,41 @@ char* my_strdup(const char* str) {
     return dest;
 }
 
-void compare_strdup(void) {
-    
+#if defined _POSIX_C_SOURCE && \
+    (_XOPEN_SOURCE >= 500 || \
+    _POSIX_C_SOURCE >= 200809L)
+#define reference_strdup(str) strdup(str)
+#else
+#define reference_strdup(str) my_strdup(str)
+#error "Why is strdup not there?"
+#endif
+
+void compare_strdup(const char* str) {
+    printf("Testing with:\nstr = %s, address = %p\n", str, str);
+    char* std_result = reference_strdup(str);
+    char* ft_result = ft_strdup(str);
+    printf("ft_strdup: %s\n", ft_result);
+    printf("strdup: %s\n", std_result);
+    if (strcmp(std_result, ft_result) == 0) {
+        printf("Test passed!\n");
+    } else {
+        printf("Test failed\n");
+    }
+    printf("\n");
+    free(ft_result);
+    free(std_result);
 }
 
 void strdup_test(void) {
-    
+    char stack_string[] = "42 Heilbronn";
+    char* static_string = "Something";
+    char* heap_string = malloc(strlen(static_string) + 1);
+    strcpy(heap_string, static_string);
+
+    compare_strdup(stack_string);
+    compare_strdup(static_string);
+    compare_strdup(heap_string);
+    compare_strdup("");
+
+    free(heap_string);
 }

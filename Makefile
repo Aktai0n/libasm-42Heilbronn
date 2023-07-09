@@ -12,7 +12,7 @@ ASFLAGS = -wall -iinc -g
 ifeq ($(OS), Darwin) # MacOS
 ASFLAGS += -f macho64 -dMACOS=1
 else ifeq ($(OS), Linux) # Linux
-ASFLAGS += -f elf64 -dLINUX=1
+ASFLAGS += -f elf64 -F dwarf -dLINUX=1
 else
 $(error Unsupported operating system: $(OS))
 endif
@@ -29,7 +29,7 @@ ARFLAGS = rcs
 
 # compiler config
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g #-Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
 
 # utils config
 RM = rm -rf
@@ -82,7 +82,7 @@ re: fclean all
 bonus: all
 
 test: all
-	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(NAME) -o tester
+	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(OBJ) -o tester
 #	$(shell bash $(TEST_DIR)/run.sh)
 
 

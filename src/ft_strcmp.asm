@@ -23,10 +23,9 @@ ft_strcmp:
 
         .EQUAL:
         test cl, cl ; temp_s1 != '\0'
-        jz .LOOP1
+        jnz .LOOP1
         test dl, dl ; temp_s2 != '\0'
-        jz .LOOP1
+        jnz .LOOP1
 
     xor rax, rax
     ret ; return 0
-

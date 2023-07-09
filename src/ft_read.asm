@@ -16,10 +16,10 @@ ft_read:
     mov rax, READ_SYSCALL_CODE
     syscall
     test rax, rax ; check for read error
-    jz _set_errno
+    jz .SET_ERRNO
     ret
 
-_set_errno:
+.SET_ERRNO:
     push rbp ; function prologue
     mov rbp, rsp
 
