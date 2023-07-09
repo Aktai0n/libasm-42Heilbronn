@@ -4,6 +4,18 @@
 #include <stddef.h>
 #include <sys/types.h>
 
+
+#define RESET "\033[0m"
+#define BOLD "\033[1m"
+#define RED "\033[91m"
+#define GREEN "\033[32m"
+#define LIGHT_BLUE "\033[94m"
+#define BOLD_RED "\033[1m\033[91m"
+#define BOLD_GREEN "\033[1m\033[32m"
+#define BOLD_LIGHT_BLUE "\033[1m\033[94m"
+
+#define LIBASM_BONUS // Remove me!!!
+
 size_t ft_strlen(const char* str);
 
 char* ft_strcpy(char* dest, const char* src);

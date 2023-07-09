@@ -8,7 +8,6 @@ global ft_list_size
 ; Parameters:
 ;   list = rdi
 
-
 ft_list_size:
     xor rax, rax ; int size = 0
     test rdi, rdi ; list == NULL

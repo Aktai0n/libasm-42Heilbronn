@@ -62,7 +62,7 @@ int my_atoi_base(const char* str, const char* base) {
         result = (result * base_len) + digit;
     }
     // maybe check for int overflow
-    return (int)(result * sign);
+    return (int)result * sign;
 }
 
 void compare_atoi_base(const char* num_string,
@@ -77,6 +77,10 @@ void compare_atoi_base(const char* num_string,
         printf("Test failed\n");
     }
     printf("\n");
+}
+
+void atoi_base_test(void) {
+
 }
 
 // int main(void) {

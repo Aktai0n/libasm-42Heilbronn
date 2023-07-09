@@ -61,7 +61,9 @@ ODIR = build
 OBJ = $(patsubst $(SDIR)/%.asm, $(ODIR)/%.o, $(SRC_FULL))
 
 TEST_DIR = test
-TEST_SRC = $(wildcard $(TEST_DIR)/*.c)
+# TEST_SRC = $(wildcard $(TEST_DIR)/*.c)
+TEST_SRC = $(shell find $(TEST_DIR) -type f -name "*.c")
+TESTER_NAME := tester
 
 # -------------------- public rules ---------------------
 
@@ -76,13 +78,15 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME)
+	$(RM) $(TESTER_NAME)
 
 re: fclean all
 
 bonus: all
 
+# test: CFLAGS += -DLIBASM_BONUS=1
 test: all
-	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(OBJ) -o tester
+	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(OBJ) -o $(TESTER_NAME)
 #	$(shell bash $(TEST_DIR)/run.sh)
 
 
