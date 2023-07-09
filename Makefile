@@ -29,7 +29,7 @@ ARFLAGS = rcs
 
 # compiler config
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 -fsanitize=address #-Werror
 
 # utils config
 RM = rm -rf

@@ -1,41 +1,6 @@
 	.file	"strcmp_test.c"
 	.intel_syntax noprefix
 	.text
-	.p2align 4
-	.globl	ft_strcmp
-	.type	ft_strcmp, @function
-ft_strcmp:
-.LFB22:
-	.cfi_startproc
-	xor	eax, eax
-	.p2align 4,,10
-	.p2align 3
-.L2:
-	movzx	edx, BYTE PTR [rdi+rax]
-	movzx	ecx, BYTE PTR [rsi+rax]
-	test	dl, dl
-	jne	.L4
-	test	cl, cl
-	je	.L8
-.L5:
-	movzx	eax, dl
-	sub	eax, ecx
-	ret
-	.p2align 4,,10
-	.p2align 3
-.L4:
-	add	rax, 1
-	cmp	dl, cl
-	je	.L2
-	jmp	.L5
-	.p2align 4,,10
-	.p2align 3
-.L8:
-	xor	eax, eax
-	ret
-	.cfi_endproc
-.LFE22:
-	.size	ft_strcmp, .-ft_strcmp
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
 .LC0:
@@ -52,52 +17,49 @@ ft_strcmp:
 	.globl	compare_strcmp
 	.type	compare_strcmp, @function
 compare_strcmp:
-.LFB23:
+.LFB22:
 	.cfi_startproc
 	push	r12
 	.cfi_def_cfa_offset 16
 	.cfi_offset 12, -16
+	mov	rdx, rdi
 	mov	r8, rsi
 	mov	rcx, rsi
-	mov	rdx, rdi
 	push	rbp
 	.cfi_def_cfa_offset 24
 	.cfi_offset 6, -24
-	mov	r12, rsi
-	mov	rbp, rdi
+	xor	eax, eax
+	mov	rbp, rsi
 	mov	rsi, rdi
 	push	rbx
 	.cfi_def_cfa_offset 32
 	.cfi_offset 3, -32
+	mov	rbx, rdi
 	mov	edi, OFFSET FLAT:.LC0
-	xor	eax, eax
 	call	printf
+	mov	rdi, rbx
+	mov	rsi, rbp
 	xor	eax, eax
-	.p2align 4,,10
-	.p2align 3
-.L10:
-	movzx	edx, BYTE PTR [rbp+0+rax]
-	movzx	ecx, BYTE PTR [r12+rax]
-	test	dl, dl
-	jne	.L12
-	test	cl, cl
-	je	.L18
-.L13:
-	movzx	ebx, dl
-	sub	ebx, ecx
-.L11:
-	mov	rdi, rbp
-	mov	rsi, r12
+	call	ft_strcmp
+	mov	rdi, rbx
+	mov	rsi, rbp
+	mov	r12d, eax
 	call	strcmp
-	mov	esi, ebx
+	mov	esi, r12d
 	mov	edi, OFFSET FLAT:.LC1
-	mov	ebp, eax
+	mov	ebx, eax
 	mov	edx, eax
 	xor	eax, eax
 	call	printf
-	cmp	ebp, ebx
-	je	.L19
-	mov	edi, OFFSET FLAT:.LC3
+	test	r12d, r12d
+	jle	.L6
+	test	ebx, ebx
+	jg	.L2
+.L6:
+	test	r12d, ebx
+	jns	.L12
+.L2:
+	mov	edi, OFFSET FLAT:.LC2
 	call	puts
 	pop	rbx
 	.cfi_remember_state
@@ -112,19 +74,9 @@ compare_strcmp:
 	.p2align 3
 .L12:
 	.cfi_restore_state
-	add	rax, 1
-	cmp	dl, cl
-	je	.L10
-	jmp	.L13
-	.p2align 4,,10
-	.p2align 3
-.L18:
-	xor	ebx, ebx
-	jmp	.L11
-	.p2align 4,,10
-	.p2align 3
-.L19:
-	mov	edi, OFFSET FLAT:.LC2
+	or	r12d, ebx
+	je	.L2
+	mov	edi, OFFSET FLAT:.LC3
 	call	puts
 	pop	rbx
 	.cfi_def_cfa_offset 24
@@ -135,21 +87,23 @@ compare_strcmp:
 	.cfi_def_cfa_offset 8
 	jmp	putchar
 	.cfi_endproc
-.LFE23:
+.LFE22:
 	.size	compare_strcmp, .-compare_strcmp
 	.section	.rodata.str1.1
 .LC4:
-	.string	"42 Heilbronn\n"
+	.string	"42 Heilbronn\n\n"
 .LC5:
-	.string	""
+	.string	"42 Heilbronn\n"
 .LC6:
+	.string	""
+.LC7:
 	.string	"hello World"
 	.text
 	.p2align 4
 	.globl	strcmp_test
 	.type	strcmp_test, @function
 strcmp_test:
-.LFB24:
+.LFB23:
 	.cfi_startproc
 	movabs	rax, 7092159396924371508
 	push	rbx
@@ -171,12 +125,12 @@ strcmp_test:
 	mov	QWORD PTR [rbx+5], rax
 	call	compare_strcmp
 	lea	rdi, [rsp+3]
-	mov	esi, OFFSET FLAT:.LC4
-	call	compare_strcmp
 	mov	esi, OFFSET FLAT:.LC5
-	mov	edi, OFFSET FLAT:.LC6
 	call	compare_strcmp
-	mov	esi, OFFSET FLAT:.LC5
+	mov	esi, OFFSET FLAT:.LC6
+	mov	edi, OFFSET FLAT:.LC7
+	call	compare_strcmp
+	mov	esi, OFFSET FLAT:.LC6
 	mov	rdi, rsi
 	call	compare_strcmp
 	mov	rsi, rbx
@@ -192,25 +146,7 @@ strcmp_test:
 	.cfi_def_cfa_offset 8
 	jmp	free
 	.cfi_endproc
-.LFE24:
+.LFE23:
 	.size	strcmp_test, .-strcmp_test
-	.section	.text.startup,"ax",@progbits
-	.p2align 4
-	.globl	main
-	.type	main, @function
-main:
-.LFB25:
-	.cfi_startproc
-	sub	rsp, 8
-	.cfi_def_cfa_offset 16
-	xor	eax, eax
-	call	strcmp_test
-	xor	eax, eax
-	add	rsp, 8
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE25:
-	.size	main, .-main
 	.ident	"GCC: (GNU) 12.2.1 20221121 (Red Hat 12.2.1-4)"
 	.section	.note.GNU-stack,"",@progbits
