@@ -9,7 +9,7 @@
 #include "libasm.h"
 
 #ifndef TESTFILE_NAME
-#define TESTFILE_NAME "./a.out"
+#define TESTFILE_NAME "README.md"
 #endif
 
 void compare_read(int fd, size_t len) {

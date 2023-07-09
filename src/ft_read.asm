@@ -16,7 +16,8 @@ ft_read:
     mov rax, READ_SYSCALL_CODE
     syscall
     test rax, rax ; check for read error
-    jz .SET_ERRNO
+    ; cmp rax, 0
+    jl .SET_ERRNO
     ret
 
 .SET_ERRNO:
@@ -30,7 +31,7 @@ ft_read:
     mov DWORD [rax], ecx ; errno = error code
 
     mov rsp, rbp ; function epilogue
-    pop rsp
+    pop rbp
 
     mov rax, -1
     ret ; return -1

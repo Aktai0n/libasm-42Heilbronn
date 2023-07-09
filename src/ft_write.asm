@@ -15,9 +15,7 @@ extern GET_ERRNO
 ft_write:
     mov rax, WRITE_SYSCALL_CODE
     syscall
-    ; test rax, rax ; check for write error
-    ; jz .SET_ERRNO
-    cmp rax, 0
+    test rax, rax ; check for write error
     jl .SET_ERRNO
     ret
 
@@ -32,7 +30,7 @@ ft_write:
     mov DWORD [rax], ecx ; errno = error code
 
     mov rsp, rbp ; function epilogue
-    pop rsp
+    pop rbp
 
     mov rax, -1
     ret ; return -1

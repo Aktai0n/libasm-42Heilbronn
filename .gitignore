@@ -10,3 +10,4 @@ tester
 # system files
 .vscode
 .DS_Store
+core.*

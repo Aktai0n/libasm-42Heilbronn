@@ -166,6 +166,6 @@ ft_isspace:
     sete dl
     lea eax, [edi - 9] ; substact 9 from c because '\t' has ascii code 9
     cmp eax, 4 ; c >= '\t' && c <= '\r'
-    setbe al
+    setbe al ; set al to 1 if the above comparison was true
     or eax, edx ; combine the results into eax
     ret

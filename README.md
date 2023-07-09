@@ -14,3 +14,4 @@ https://www.nasm.us/doc/nasmdoc0.html
 https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-phpapp02/95/assembly-language-programmingunit-4-28-728.jpg?cb=1320545565
 https://man7.org/linux/man-pages/man2/syscall.2.html
 https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
+https://www.youtube.com/watch?v=GV10eIuPs9k&t=403s
