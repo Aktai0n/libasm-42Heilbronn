@@ -7,7 +7,7 @@ static void swap_nodes(t_list* node1, t_list* node2) {
 }
 
 void ft_listsort(t_list** list, cmp_func cmp) {
-    if (list == NULL) {
+    if (list == NULL || *list == NULL) {
         return;
     }
     for (t_list* outer_node = *list; outer_node->next != NULL; outer_node = outer_node->next) {

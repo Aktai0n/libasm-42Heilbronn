@@ -3,14 +3,14 @@
 #include "list.h"
 #include "libasm.h"
 
-void ft_print_list(const t_list* list, void (*print_func)(void*)) {
+void ft_print_list(const t_list* list, print_func print) {
     if (list == NULL) {
         printf("(empty)\n");
         return;
     }
     size_t size = 0;
     for (; list != NULL; list = list->next) {
-        print_func(list->data);
+        print(list->data);
         printf(" -> ");
         ++size;
     }

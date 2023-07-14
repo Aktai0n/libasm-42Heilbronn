@@ -17,6 +17,8 @@ global ft_list_sort
 ft_list_sort:
     test rdi, rdi ; list == NULL
     jz .RETURN
+    cmp QWORD [rdi], 0 ; *list == NULL
+    je .RETURN
 
     push rbp ; function prologue
     mov rbp, rsp
@@ -41,7 +43,7 @@ ft_list_sort:
             test eax, eax ; ret_val <= 0
             jle .NO_SWAP
                 ; Repurpose the 128-bit floating point registers to
-                ; move all 16 bytes of the struct at once
+                ; move all 16 bytes of the struct t_list at once
                 movups xmm0, [r12]
                 movups xmm1, [r13]
                 movups [r12], xmm1

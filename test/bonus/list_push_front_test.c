@@ -13,10 +13,10 @@ void compare_list_push_front(t_list** list1,
                              t_list** list2,
                              void* data_to_add,
                              size_t data_len,
-                             void (*print_func)(void*)) {
+                             print_func print) {
     t_list* save_list1_head = *list1;
     printf("Testing with:\n");
-    ft_print_list(*list1, print_string);
+    ft_print_list(*list1, print);
     void* data1 = malloc(data_len);
     memcpy(data1, data_to_add, data_len);
     void* data2 = malloc(data_len);
@@ -24,9 +24,9 @@ void compare_list_push_front(t_list** list1,
     ft_listadd_front(list2, data2);
     ft_list_push_front(list1, data1);
     printf("ft_list_push_front:\n");
-    ft_print_list(*list1, print_func);
+    ft_print_list(*list1, print);
     printf("reference_list_push_front:\n");
-    ft_print_list(*list2, print_func);
+    ft_print_list(*list2, print);
     if (memcmp((*list1)->data, (*list2)->data, data_len) == 0 &&
         (*list1)->next == save_list1_head) {
         printf("%sTest passed!\n", BOLD_GREEN);
@@ -72,5 +72,7 @@ void list_push_front_test(void) {
     
     ft_listclear(&list1, destroy_test_data);
     ft_listclear(&list2, destroy_test_data);
+
+    
 
 }
