@@ -3,6 +3,8 @@
 #include <stdbool.h>
 #include <string.h>
 
+#include "libasm.h"
+
 static bool my_isspace(int c) {
     return (c == ' ' ||
             c == '\t' ||
@@ -65,29 +67,42 @@ int my_atoi_base(const char* str, const char* base) {
     return (int)result * sign;
 }
 
-void compare_atoi_base(const char* num_string,
-                       const char* base, 
-                       int expected_result) {
-    printf("Testing with: num_string = %s\nbase = %s", num_string, base);
-    int result = my_atoi_base(num_string, base);
-    printf("Result:\nft_atoi_base = %i, expected = %i\n", result, expected_result);
-    if (result == expected_result) {
-        printf("Test passed\n");
-    } else {
-        printf("Test failed\n");
+void compare_atoi_base(char* num_string,
+                       char* base) {
+    printf("Testing with:\nnum_string = %s\nbase = %s\n", num_string, base);
+    int my_result = my_atoi_base(num_string, base);
+    int ft_result = ft_atoi_base(num_string, base);
+    printf("ft_atoi_base: %d\n", ft_result);
+    printf("reference_atoi_base: %d\n", my_result);
+    if (ft_result == 0) {
+        perror("errno");
     }
-    printf("\n");
+    if (my_result == ft_result) {
+        printf("%sTest passed!\n", BOLD_GREEN);
+    } else {
+        printf("%sTest failed!\n", BOLD_RED);
+    }
+    printf("%s\n", RESET);
 }
 
 void atoi_base_test(void) {
+    char decimal[] = "0123456789";
+    char hex[] = "0123456789ABCDEF";
+    char octal[] = "012345678";
+    char binary[] = "01";
 
+    printf("\n%s-------------------- atoi base test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
+    compare_atoi_base("", "");
+    compare_atoi_base("   111", "1");
+    compare_atoi_base("0001", "121");
+    compare_atoi_base("10", binary);
+    compare_atoi_base("100", decimal);
+    compare_atoi_base("\t\f\v ++-+-30", hex);
+    compare_atoi_base("\t\f\v \r+101010someting else", binary);
 }
 
 // int main(void) {
-//     char decimal[] = "0123456789";
-//     char hex[] = "0123456789ABCDEF";
-//     char octal[] = "012345678";
-//     char binary[] = "01";
+
 //     compare_atoi_base("100", decimal, 100);
 //     compare_atoi_base("0", octal, 0);
 //     compare_atoi_base("      +++42", decimal, 42);

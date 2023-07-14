@@ -17,8 +17,8 @@ extern GET_ERRNO
 ;   r9 = base_len
 ;   r10 = sign
 ; Stack layout:
-;   rbp + 0 = copy of str
-;   rbp + 8 = copy of base
+;   rbp - 8 = copy of str
+;   rbp - 16 = copy of base
 
 ft_atoi_base:
     push rbp ; function prologue
@@ -29,13 +29,14 @@ ft_atoi_base:
     test rsi, rsi ; base == NULL
     jz .RETURN_ZERO
 
-    push rdi ; copy str to rbp + 0
-    push rsi ; copy base to rbp + 8
+    push rdi ; copy str to rbp - 8
+    push rsi ; copy base to rbp - 16
 
     mov rdi, rsi
     call ft_strlen ; get the len of base
     mov r9, rax ; store base_len
-    mov rdi, QWORD [rbp + 0] ; restore str
+    mov rdi, QWORD [rbp - 8] ; restore str
+    mov rsi, QWORD [rbp - 16] ; and base
 
 ; --------------- validate the base --------------
 
@@ -46,14 +47,14 @@ ft_atoi_base:
     .LOOP1:
         movzx edx, BYTE [rsi + rcx] ; c = base[i]
         cmp dl, 43 ; c == '+'
-        je .INVALID_BASE
+        ; je .INVALID_BASE
         cmp dl, 45 ; c == '-'
-        je .INVALID_BASE
+        ; je .INVALID_BASE
         mov edi, edx
         call ft_isspace
-        mov rdi, [rbp + 0] ; restore str <-- can probably be removed
+        ; mov rdi, [rbp - 8] ; restore str <-- can probably be removed
         test al, al ; check base[i] for spacing character
-        jz .INVALID_BASE
+        jnz .INVALID_BASE
 
         lea rax, [rcx + 1] ; size_t j = i + 1
         mov dl, BYTE [rsi + rcx] ; char c = base[i]
@@ -62,16 +63,16 @@ ft_atoi_base:
             je .INVALID_BASE
 
             inc rax ; ++j
-            cmp rax, r9 ; j != base_len
-            jne .LOOP2
+            cmp rax, r9 ; j < base_len
+            jl .LOOP2
 
         inc rcx ; ++i
         cmp rcx, r9 ; i != base_len
-        jne .LOOP1
+        jl .LOOP1
 
 ; --------------- skip spacing characters --------------
 
-    mov rcx, rbp ; const char* s = str
+    mov rcx, QWORD [rbp - 8] ; const char* s = str
     .LOOP3:
         movzx edi, BYTE [rcx] ; c = *s
         call ft_isspace

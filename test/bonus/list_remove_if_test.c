@@ -38,14 +38,6 @@ void compare_list_remove_if(t_list** list1,
 void list_remove_if_test(void) {
     printf("\n%s-------------------- list remove if test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
 
-    // t_list* list = ft_populate_list(10);
-    // char str[] = "node 4";
-
-    // ft_list_remove_if(&list, str, strcmp, free);
-    // ft_print_list(list, print_string);
-
-
-
     t_list* list1 = NULL;
     t_list* list2 = NULL;
 

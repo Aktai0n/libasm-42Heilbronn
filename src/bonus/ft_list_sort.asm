@@ -11,8 +11,8 @@ global ft_list_sort
 ;   r12 = t_list* of the inner loop
 ;   r13 = the next node of r12
 ; Stack layout:
-;   rbp + 0 = copy of cmp_func
-;   rbp + 8 = copy of list
+;   rbp - 8 = copy of cmp_func
+;   rbp - 16 = copy of list
 
 ft_list_sort:
     test rdi, rdi ; list == NULL
@@ -39,7 +39,7 @@ ft_list_sort:
             mov r13, QWORD [r12 + 8] ; t_list* next = inner_node->next
             mov rdi, QWORD [r12]
             mov rsi, QWORD [r13]
-            call rbp ; cmp_func(inner_node->data, next->data)
+            call QWORD [rbp - 8] ; cmp_func(inner_node->data, next->data)
             test eax, eax ; ret_val <= 0
             jle .NO_SWAP
                 ; Repurpose the 128-bit floating point registers to
