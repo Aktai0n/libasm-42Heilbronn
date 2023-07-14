@@ -1,5 +1,6 @@
 #include "list.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void ft_listdel_pred(t_list** list, void* data, cmp_func pred, free_func del) {
     if (list == NULL) {

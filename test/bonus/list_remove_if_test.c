@@ -38,6 +38,14 @@ void compare_list_remove_if(t_list** list1,
 void list_remove_if_test(void) {
     printf("\n%s-------------------- list remove if test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
 
+    // t_list* list = ft_populate_list(10);
+    // char str[] = "node 4";
+
+    // ft_list_remove_if(&list, str, strcmp, free);
+    // ft_print_list(list, print_string);
+
+
+
     t_list* list1 = NULL;
     t_list* list2 = NULL;
 
@@ -52,7 +60,7 @@ void list_remove_if_test(void) {
     list1 = ft_populate_list(10);
     list2 = ft_populate_list(10);
 
-    printf("%sremove from the beginning:\n%s", LIGHT_BLUE, RESET);
+    printf("%sremove from the end:\n%s", LIGHT_BLUE, RESET);
     compare_list_remove_if(&list1,
                            &list2,
                            "node 0",
@@ -60,7 +68,7 @@ void list_remove_if_test(void) {
                            free,
                            print_string);
     
-    printf("%sremove from the end:\n%s", LIGHT_BLUE, RESET);
+    printf("%sremove from the beginning:\n%s", LIGHT_BLUE, RESET);
     compare_list_remove_if(&list1,
                            &list2,
                            "node 9",
@@ -103,8 +111,8 @@ void list_remove_if_test(void) {
     ft_listclear(&list2, free);
 
     long int seed = time(NULL);
-    list1 = generate_test_data_list(100, (uint32_t)seed);
-    list2 = generate_test_data_list(100, (uint32_t)seed);
+    list1 = generate_test_data_list(10, (uint32_t)seed);
+    list2 = generate_test_data_list(10, (uint32_t)seed);
 
     struct s_test_data data_to_remove = init_test_data(1, '*', 0.333);
     struct s_test_data* data1 = dup_test_data(data_to_remove);

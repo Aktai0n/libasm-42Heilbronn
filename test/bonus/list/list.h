@@ -42,7 +42,7 @@ void ft_listsort(t_list** list, cmp_func cmp);
 /// @param list a pointer to the head of a linked list
 /// @param data the reference data which all elements are compared to
 /// @param pred a function pointer to compare the data reference to the elements.
-///             It's used as follows: pred(data, node->data)
+///             It's used as follows: pred(node->data, data)
 /// @param del a function pointer to destroy the data segment in the linked list.
 ///            It's used as follows: del(node->data)
 void ft_listdel_pred(t_list** list, void* data, cmp_func pred, free_func del);
@@ -85,8 +85,8 @@ struct s_test_data {
 };
 
 void print_test_data(void* ptr);
-int compare_test_data(const struct s_test_data lhs,
-                      const struct s_test_data rhs);
+int compare_test_data(const struct s_test_data* lhs,
+                      const struct s_test_data* rhs);
 struct s_test_data init_test_data(int n, char c, double f);
 void destroy_test_data(void* ptr);
 t_list* generate_test_data_list(size_t size, uint32_t seed);

@@ -8,17 +8,17 @@
 
 void print_test_data(void* ptr) {
     const struct s_test_data* data = ptr;
-    printf("num = %d, char = %c, fract = %f\n",
+    printf("{ num = %d, char = %c, fract = %f }",
             data->number,
             data->character,
             data->fraction);
 }
 
-int compare_test_data(const struct s_test_data lhs,
-                      const struct s_test_data rhs) {
-    if (lhs.number == rhs.number) {
+int compare_test_data(const struct s_test_data* lhs,
+                      const struct s_test_data* rhs) {
+    if (lhs->number == rhs->number) {
         return 0;
-    } else if (lhs.number < rhs.number) {
+    } else if (lhs->number < rhs->number) {
         return -1;
     } else {
         return 1;

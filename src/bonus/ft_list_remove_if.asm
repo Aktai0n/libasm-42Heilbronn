@@ -3,7 +3,7 @@ global ft_list_remove_if
 
 %include "platform_specific.inc"
 
-EXTERN FREE
+extern FREE
 
 ; Prototype:
 ;   void ft_list_remove_if(t_list** list,
@@ -23,8 +23,8 @@ EXTERN FREE
 ;   r14 = cmp_func
 ;   r15 = free_func
 ; Stack layout:
-;   rbp + 0 = data_ref
-;   rbp + 8 = list
+;   rbp - 8 = data_ref
+;   rbp - 16 = list
 
 ft_list_remove_if:
     test rdi, rdi
@@ -32,6 +32,7 @@ ft_list_remove_if:
 
     push rbp ; function prologue
     mov rbp, rsp
+    ; mov rbp, rsi
 
     push rsi ; save arguments on stack
     push rdi
@@ -54,25 +55,25 @@ ft_list_remove_if:
 
         xor rax, rax ; clear return register
         mov rdi, QWORD [rbx]
-        mov rsi, QWORD [rbp + 0]
+        mov rsi, QWORD [rbp - 8]
         call r14 ; cmp_func(it->data, data_ref)
 
         test eax, eax ; return_value != 0
-        jnz .NO_MATCH
+        jne .NO_MATCH
             test r12, r12 ; test whether it's the first node in the list
             jz .IF1
                 mov QWORD [r12 + 8], r13 ; prev->next = next
                 jmp .ENDIF1
             .IF1:
-                mov rdx, QWORD [rbp + 8]
-                mov QWORD [rdx], r13 ; *list = node
+                mov rdx, QWORD [rbp - 16]
+                mov QWORD [rdx], r13 ; *list = next
             .ENDIF1:
 
             mov rdi, QWORD [rbx]
             call r15 ; free_func(it->data)
             mov rdi, rbx
             call FREE ; free(it)
-            xor rdi, rdi ; it = NULL
+            xor rbx, rbx ; it = NULL
         .NO_MATCH:
 
         mov r12, rbx ; prev = it
