@@ -25,4 +25,17 @@
               "Usage: nasm -dLINUX=1 or nasm -dMACOS=1"
 %endif
 
+%ifdef COMPILER
+       %ifidni COMPILER, gcc
+              %define FT_WRITE ft_write
+       %elifidni COMPILER, clang
+              %define FT_WRITE _ft_write
+       %endif
+
+%else
+       %error "No compiler specified\n" \
+              "Usage: nasm -dCOMPILER=gcc or nasm -dCOMPILER=clang"
+
+%endif
+
 %endif ; PLATFORM_SPECIFIC_INC

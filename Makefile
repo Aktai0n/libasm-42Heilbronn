@@ -33,10 +33,12 @@ CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
 
 COMPILER := $(shell $(CC) --version)
 
-ifneq ($(findstring gcc, $(COMPILER)),)
-ASFLAGS += -dTARGET=gcc
-else ifneq ($(findstring clang, $(COMPILER)),)
-ASFLAGS += -dTARGET=clang
+# detect whether gcc or clang is being used
+# because clang prefixes functions with an underscore
+ifneq ($(or $(findstring GCC, $(COMPILER)), $(findstring gcc, $(COMPILER))),)
+ASFLAGS += -dCOMPILER=gcc
+else ifneq ($(or $(findstring clang, $(COMPILER)), $(findstring clang, $(COMPILER))),)
+ASFLAGS += -dCOMPILER=clang
 else
 $(error Unsupported compiler: $(COMPILER))
 endif
