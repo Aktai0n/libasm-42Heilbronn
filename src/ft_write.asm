@@ -1,5 +1,5 @@
 section .text
-global ft_write
+global _ft_write
 
 %include "platform_specific.inc"
 
@@ -12,7 +12,7 @@ extern GET_ERRNO
 ;   buf = rsi
 ;   size = rdx
 
-ft_write:
+_ft_write:
     mov rax, WRITE_SYSCALL_CODE
     syscall
     test rax, rax ; check for write error
