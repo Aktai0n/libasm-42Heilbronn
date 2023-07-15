@@ -31,6 +31,16 @@ ARFLAGS = rcs
 CC = cc
 CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
 
+COMPILER := $(shell $(CC) --version)
+
+ifneq ($(findstring gcc, $(COMPILER)),)
+ASFLAGS += -dTARGET=gcc
+else ifneq ($(findstring clang, $(COMPILER)),)
+ASFLAGS += -dTARGET=clang
+else
+$(error Unsupported compiler: $(COMPILER))
+endif
+
 # utils config
 RM = rm -rf
 MKDIR = mkdir -p
