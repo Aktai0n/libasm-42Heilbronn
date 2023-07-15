@@ -1,5 +1,5 @@
 section .text
-global ft_read
+global _ft_read
 
 %include "platform_specific.inc"
 
@@ -12,7 +12,7 @@ extern GET_ERRNO
 ;   buf = rsi
 ;   size = rdx
 
-ft_read:
+_ft_read:
     mov rax, READ_SYSCALL_CODE
     syscall
     test rax, rax ; check for read error
