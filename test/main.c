@@ -85,7 +85,7 @@ int main(int argc, char** argv) {
         }
     #endif // LIBASM_BONUS
         else {
-            printf("\n\nUnknown option: %s\n\n", param);
+            printf("\n\n%sUnknown option: %s\n\n%s", BOLD_RED, param, RESET);
         }
     }
 

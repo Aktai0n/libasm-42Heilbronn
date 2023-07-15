@@ -21,17 +21,22 @@ char* my_strdup(const char* str) {
     return dest;
 }
 
-#if defined _POSIX_C_SOURCE && \
+/*
+*   Determine whether the strdup in string.h
+*   is available
+*/
+#if (defined _POSIX_C_SOURCE && \
     (_XOPEN_SOURCE >= 500 || \
-    _POSIX_C_SOURCE >= 200809L)
+    _POSIX_C_SOURCE >= 200809L)) || \
+    (defined __DARWIN_C_LEVEL && \
+    __DARWIN_C_LEVEL >= 200112L)
 #define reference_strdup(str) strdup(str)
 #else
 #define reference_strdup(str) my_strdup(str)
-#error "Why is strdup not there?"
 #endif
 
 void compare_strdup(const char* str) {
-    printf("Testing with:\nstr = %s, address = %p\n", str, str);
+    printf("Testing with:\nstr = %s, address = %p\n", str, (void*)str);
     char* std_result = reference_strdup(str);
     char* ft_result = ft_strdup(str);
     printf("ft_strdup: %s\n", ft_result);

@@ -10,7 +10,7 @@ void compare_strcpy(const char* src) {
     char* ft_dest = malloc(src_len + 1);
     char* std_dest = malloc(src_len + 1);
 
-    printf("Testing with:\nsrc = %s, address = %p\n", src, src);
+    printf("Testing with:\nsrc = %s, address = %p\n", src, (void*)src);
     char* std_result = strcpy(std_dest, src);
     char* ft_result = ft_strcpy(ft_dest, src);
 

@@ -24,7 +24,11 @@ int ft_strcmp(const char* s1, const char* s2) {
 #endif
 
 void compare_strcmp(const char* s1, const char* s2) {
-    printf("Testing with:\ns1 = %s, address = %p\ns2 = %s, address = %p\n", s1, s1, s2, s2);
+    printf("Testing with:\ns1 = %s, address = %p\ns2 = %s, address = %p\n", 
+           s1,
+           (void*)s1,
+           s2,
+           (void*)s2);
     int ft_result = ft_strcmp(s1, s2);
     int std_result = strcmp(s1, s2);
     printf("ft_strcmp = %d, strcmp = %d\n", ft_result, std_result);
