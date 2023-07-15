@@ -1,5 +1,8 @@
 section .text
-global ft_strcmp
+
+%include "platform_specific.inc"
+
+global FT_STRCMP
 
 ; Prototype:
 ;   int ft_strcmp(const char* s1, const char* s2)
@@ -7,7 +10,7 @@ global ft_strcmp
 ;   s1 = rdi
 ;   s2 = rsi
 
-ft_strcmp:
+FT_STRCMP:
     xor rax, rax ; size_t i = 0
     .LOOP1:
         mov cl, BYTE [rdi + rax] ; char temp_s1 = s1[i]

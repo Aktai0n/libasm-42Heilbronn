@@ -1,9 +1,10 @@
 section .text
-global ft_atoi_base
 
 %include "platform_specific.inc"
 
-extern ft_strlen
+global FT_ATOI_BASE
+
+extern FT_STRLEN
 extern GET_ERRNO
 
 ; Prototype:
@@ -20,7 +21,7 @@ extern GET_ERRNO
 ;   rbp - 8 = copy of str
 ;   rbp - 16 = copy of base
 
-ft_atoi_base:
+FT_ATOI_BASE:
     push rbp ; function prologue
     mov rbp, rsp
 
@@ -33,7 +34,7 @@ ft_atoi_base:
     push rsi ; copy base to rbp - 16
 
     mov rdi, rsi
-    call ft_strlen ; get the len of base
+    call FT_STRLEN ; get the len of base
     mov r9, rax ; store base_len
     mov rdi, QWORD [rbp - 8] ; restore str
     mov rsi, QWORD [rbp - 16] ; and base

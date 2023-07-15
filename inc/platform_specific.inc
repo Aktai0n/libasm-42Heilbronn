@@ -17,8 +17,6 @@
        %define GET_ERRNO ___error ; check on mac in school!
        %define ERANGE_ERROR_CODE 34 ; check on mac in school!
        %define EINVAL_ERROR_CODE 22 ; check on mac in school!
-       %define MALLOC _malloc
-       %define FREE _free
 
 %else
        %error "No operating system specified\n" \
@@ -28,8 +26,36 @@
 %ifdef COMPILER
        %ifidni COMPILER, gcc
               %define FT_WRITE ft_write
+              %define FT_READ ft_read
+              %define FT_STRCMP ft_strcmp
+              %define FT_STRCPY ft_strcpy
+              %define FT_STRDUP ft_strdup
+              %define FT_STRLEN ft_strlen
+              %define FT_ATOI_BASE ft_atoi_base
+              %define FT_LIST_PUSH_FRONT ft_list_push_front
+              %define FT_LIST_REMOVE_IF ft_list_remove_if
+              %define FT_LIST_SIZE ft_list_size
+              %define FT_LIST_SORT ft_list_sort
+
+              %define MALLOC malloc
+              %define FREE free
+
        %elifidni COMPILER, clang
               %define FT_WRITE _ft_write
+              %define FT_READ _ft_read
+              %define FT_STRCMP _ft_strcmp
+              %define FT_STRCPY _ft_strcpy
+              %define FT_STRDUP _ft_strdup
+              %define FT_STRLEN _ft_strlen
+              %define FT_ATOI_BASE _ft_atoi_base
+              %define FT_LIST_PUSH_FRONT _ft_list_push_front
+              %define FT_LIST_REMOVE_IF _ft_list_remove_if
+              %define FT_LIST_SIZE _ft_list_size
+              %define FT_LIST_SORT _ft_list_sort
+
+
+              %define MALLOC _malloc
+              %define FREE _free
        %endif
 
 %else

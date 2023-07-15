@@ -1,7 +1,8 @@
 section .text
-global ft_list_remove_if
 
 %include "platform_specific.inc"
+
+global FT_LIST_REMOVE_IF
 
 extern FREE
 
@@ -26,7 +27,7 @@ extern FREE
 ;   rbp - 8 = data_ref
 ;   rbp - 16 = list
 
-ft_list_remove_if:
+FT_LIST_REMOVE_IF:
     test rdi, rdi
     jz .RETURN
 

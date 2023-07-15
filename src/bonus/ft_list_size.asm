@@ -1,5 +1,8 @@
 section .text
-global ft_list_size
+
+%include "platform_specific.inc"
+
+global FT_LIST_SIZE
 
 
 
@@ -8,7 +11,7 @@ global ft_list_size
 ; Parameters:
 ;   list = rdi
 
-ft_list_size:
+FT_LIST_SIZE:
     xor rax, rax ; int size = 0
     test rdi, rdi ; list == NULL
     jz .BREAK1

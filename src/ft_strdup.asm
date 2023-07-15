@@ -1,18 +1,19 @@
 section .text
-global ft_strdup
 
 %include "platform_specific.inc"
 
+global FT_STRDUP
+
 extern MALLOC
-extern ft_strlen
-extern ft_strcpy
+extern FT_STRLEN
+extern FT_STRCPY
 
 ; Prototype:
 ;   char* ft_strdup(const char* str)
 ; Parameters
 ;   str = rdi
 
-ft_strdup:
+FT_STRDUP:
     push rbp ; function prologue
     mov rbp, rsp
 
@@ -23,7 +24,7 @@ ft_strdup:
     mov rbx, rdi ; save the string pointer
     push rsi ; save rsi
 
-    call ft_strlen
+    call FT_STRLEN
     push rax ; save the length
     lea rdi, [rax + 1] ; bytes to allocate = len + 1
     call MALLOC
@@ -32,7 +33,7 @@ ft_strdup:
 
     mov rdi, rax ; copy dest = dest
     mov rsi, rbx ; copy src = str
-    call ft_strcpy
+    call FT_STRCPY
     pop rcx ; restore the length
     mov BYTE [rax + rcx], 0 ; dest[len] = '\0'
 

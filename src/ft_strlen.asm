@@ -1,11 +1,15 @@
 section .text
-global ft_strlen ; make the function visible to other files
+
+%include "platform_specific.inc"
+
+global FT_STRLEN ; make the function visible to other files
 
 ; Prototype:
 ;   size_t ft_strlen(const char* str)
 ; Parameters:
 ;   str = rdi
-ft_strlen:
+
+FT_STRLEN:
     mov rax, rdi ; char* temp = str
 
     .LOOP1:

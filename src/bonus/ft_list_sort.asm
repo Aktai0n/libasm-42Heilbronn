@@ -1,5 +1,8 @@
 section .text
-global ft_list_sort
+
+%include "platform_specific.inc"
+
+global FT_LIST_SORT
 
 ; Prototype:
 ;   void ft_list_sort(t_list** list, int (*cmp_func)())
@@ -14,7 +17,7 @@ global ft_list_sort
 ;   rbp - 8 = copy of cmp_func
 ;   rbp - 16 = copy of list
 
-ft_list_sort:
+FT_LIST_SORT:
     test rdi, rdi ; list == NULL
     jz .RETURN
     cmp QWORD [rdi], 0 ; *list == NULL
