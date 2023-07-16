@@ -6,6 +6,7 @@
 #include <errno.h>
 
 #include "libasm.h"
+#include "test.h"
 
 static bool my_isspace(int c) {
     return (c == ' ' ||
@@ -44,7 +45,7 @@ static bool validate_base(const char* base) {
     return true;
 }
 
-int my_atoi_base(const char* str, const char* base) {
+static int my_atoi_base(const char* str, const char* base) {
     if (str == NULL || base == NULL) {
         return 0;
     }
@@ -88,7 +89,7 @@ void compare_atoi_base(char* num_string,
     int save_ft_errno = errno;
     printf("ft_atoi_base: %d\n", ft_result);
     if (save_ft_errno != 0) {
-        printf("errno = %d, %s\n", save_ft_errno ,strerror(save_ft_errno));
+        printf("errno = %d, %s\n", save_ft_errno, strerror(save_ft_errno));
     }
     printf("reference_atoi_base: %d\n", my_result);
     if (save_my_errno != 0) {
@@ -108,7 +109,7 @@ void atoi_base_test(void) {
     char octal[] = "01234567";
     char binary[] = "01";
 
-    printf("\n%s-------------------- atoi base test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
+    printf("\n\n%s-------------------- atoi base test ------------------------%s\n\n", BOLD_LIGHT_BLUE, RESET);
     compare_atoi_base("", "");
     compare_atoi_base("   111", "1");
     compare_atoi_base("0001", "121");
@@ -125,15 +126,3 @@ void atoi_base_test(void) {
     compare_atoi_base("21474836480", decimal);
     compare_atoi_base("50000000000", decimal);
 }
-
-// int main(void) {
-
-//     compare_atoi_base("100", decimal, 100);
-//     compare_atoi_base("0", octal, 0);
-//     compare_atoi_base("      +++42", decimal, 42);
-//     compare_atoi_base("\t\f\v ++-+-30", hex, 48);
-//     compare_atoi_base(NULL, binary, 0);
-//     compare_atoi_base("something", "0", 0);
-//     compare_atoi_base("\t\f\v \r+101010someting else", binary, 42);
-//     // printf("%d\n", my_atoi_base("invalid", binary));
-// }

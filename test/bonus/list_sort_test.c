@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "./list/list.h"
+#include "test.h"
 
 static void print_string(void* ptr) {
     const char* str = ptr;
@@ -30,15 +31,18 @@ void compare_list_sort(t_list** list1,
                        t_list** list2,
                        cmp_func cmp,
                        print_func print) {
+#ifdef TEST_VERBOSE
     printf("Testing with\n");
     ft_print_list(*list1, print);
+#endif
     ft_listsort(list2, cmp);
-    ft_print_list(*list2, print);
     ft_list_sort(list1, cmp);
+#ifdef TEST_VERBOSE
     printf("ft_list_sort:\n");
     ft_print_list(*list1, print);
     printf("reference_list_sort:\n");
     ft_print_list(*list2, print);
+#endif
     if (ft_listcmp(*list1, *list2, cmp) == 0 &&
         list_is_sorted(*list1, cmp)) {
         printf("%sTest passed!\n", BOLD_GREEN);
@@ -52,7 +56,7 @@ void list_sort_test(void) {
     t_list* list1 = NULL;
     t_list* list2 = NULL;
 
-    printf("\n%s-------------------- list sort test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
+    printf("\n\n%s-------------------- list sort test ------------------------%s\n\n", BOLD_LIGHT_BLUE, RESET);
 
     printf("%swith empty list:\n%s", LIGHT_BLUE, RESET);
     compare_list_sort(&list1, &list2, strcmp, print_string);

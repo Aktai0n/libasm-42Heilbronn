@@ -3,21 +3,7 @@
 #include <stdbool.h>
 
 #include "libasm.h"
-
-void strcmp_test(void);
-void strcpy_test(void);
-void strdup_test(void);
-void strlen_test(void);
-void write_test(void);
-void read_test(void);
-
-#ifdef LIBASM_BONUS
-void atoi_base_test(void);
-void list_push_front_test(void);
-void list_size_test(void);
-void list_sort_test(void);
-void list_remove_if_test(void);
-#endif
+#include "test.h"
 
 
 static void run_all(void) {
