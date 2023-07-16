@@ -8,8 +8,6 @@
        %define GET_ERRNO __errno_location
        %define ERANGE_ERROR_CODE 34
        %define EINVAL_ERROR_CODE 22
-       %define MALLOC malloc
-       %define FREE free
 
 %elifdef MACOS
        %define WRITE_SYSCALL_CODE 0x2000004
@@ -23,6 +21,10 @@
               "Usage: nasm -dLINUX=1 or nasm -dMACOS=1"
 %endif
 
+; clang prefixes its compiled functions with an underscore,
+; but gcc doesn't. So in order to interface with both we
+; let the makefile determine what compiler is being used
+; and change the function names accordingly
 %ifdef COMPILER
        %ifidni COMPILER, gcc
               %define FT_WRITE ft_write
@@ -53,15 +55,15 @@
               %define FT_LIST_SIZE _ft_list_size
               %define FT_LIST_SORT _ft_list_sort
 
-
               %define MALLOC _malloc
               %define FREE _free
-       %endif
+
+       %endif ; COMPILER == gcc || COMPILER == clang
 
 %else
        %error "No compiler specified\n" \
               "Usage: nasm -dCOMPILER=gcc or nasm -dCOMPILER=clang"
 
-%endif
+%endif ; COMPILER
 
 %endif ; PLATFORM_SPECIFIC_INC

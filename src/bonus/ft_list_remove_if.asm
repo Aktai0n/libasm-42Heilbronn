@@ -33,7 +33,6 @@ FT_LIST_REMOVE_IF:
 
     push rbp ; function prologue
     mov rbp, rsp
-    ; mov rbp, rsi
 
     push rsi ; save arguments on stack
     push rdi

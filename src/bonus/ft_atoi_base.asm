@@ -48,12 +48,11 @@ FT_ATOI_BASE:
     .LOOP1:
         movzx edx, BYTE [rsi + rcx] ; c = base[i]
         cmp dl, 43 ; c == '+'
-        ; je .INVALID_BASE
+        je .INVALID_BASE
         cmp dl, 45 ; c == '-'
-        ; je .INVALID_BASE
+        je .INVALID_BASE
         mov edi, edx
         call ft_isspace
-        ; mov rdi, [rbp - 8] ; restore str <-- can probably be removed
         test al, al ; check base[i] for spacing character
         jnz .INVALID_BASE
 
@@ -68,7 +67,7 @@ FT_ATOI_BASE:
             jl .LOOP2
 
         inc rcx ; ++i
-        cmp rcx, r9 ; i != base_len
+        cmp rcx, r9 ; i < base_len
         jl .LOOP1
 
 ; --------------- skip spacing characters --------------

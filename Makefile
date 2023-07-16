@@ -12,7 +12,7 @@ ASFLAGS = -wall -iinc -g
 ifeq ($(OS), Darwin) # MacOS
 ASFLAGS += -f macho64 -dMACOS=1
 else ifeq ($(OS), Linux) # Linux
-ASFLAGS += -f elf64 -F dwarf -dLINUX=1
+ASFLAGS += -f elf64 -dLINUX=1
 else
 $(error Unsupported operating system: $(OS))
 endif

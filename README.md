@@ -15,3 +15,4 @@ https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-ph
 https://man7.org/linux/man-pages/man2/syscall.2.html
 https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
 https://www.youtube.com/watch?v=GV10eIuPs9k&t=403s
+https://blog.packagecloud.io/the-definitive-guide-to-linux-system-calls/
