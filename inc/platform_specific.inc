@@ -12,9 +12,9 @@
 %elifdef MACOS
        %define WRITE_SYSCALL_CODE 0x2000004
        %define READ_SYSCALL_CODE 0x2000003
-       %define GET_ERRNO ___error ; check on mac in school!
-       %define ERANGE_ERROR_CODE 34 ; check on mac in school!
-       %define EINVAL_ERROR_CODE 22 ; check on mac in school!
+       %define GET_ERRNO ___error
+       %define ERANGE_ERROR_CODE 34
+       %define EINVAL_ERROR_CODE 22
 
 %else
        %error "No operating system specified\n" \
