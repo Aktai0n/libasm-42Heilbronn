@@ -88,7 +88,7 @@ void compare_atoi_base(char* num_string,
 void atoi_base_test(void) {
     char decimal[] = "0123456789";
     char hex[] = "0123456789ABCDEF";
-    char octal[] = "012345678";
+    char octal[] = "01234567";
     char binary[] = "01";
 
     printf("\n%s-------------------- atoi base test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
@@ -99,6 +99,14 @@ void atoi_base_test(void) {
     compare_atoi_base("100", decimal);
     compare_atoi_base("\t\f\v ++-+-30", hex);
     compare_atoi_base("\t\f\v \r+101010someting else", binary);
+    compare_atoi_base("\t\v\n   -100000000 hello world", binary);
+    compare_atoi_base("01234567", octal);
+    compare_atoi_base("1111111111111111111111111111111", binary);
+    compare_atoi_base("-2147483648", decimal);
+    compare_atoi_base("-2147483649", decimal);
+    compare_atoi_base("2147483648", decimal);
+    compare_atoi_base("21474836480", decimal);
+    compare_atoi_base("50000000000", decimal);
 }
 
 // int main(void) {

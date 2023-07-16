@@ -117,18 +117,24 @@ FT_ATOI_BASE:
             inc rdx ; ++digit
             jmp .LOOP6
         .BREAK6:
+
     
-        imul rax, r9 ; result * base_len
+        imul eax, r9d ; result * base_len
         jo .OVERFLOW
         add rax, rdx ; result + digit
-        jo .OVERFLOW
         inc rcx ; ++s
         cmp BYTE [rcx], 0 ; *s == '\0'
         jne .LOOP5
     .BREAK5:
 
     imul rax, r10 ; result * sign
-    jo .OVERFLOW
+
+; --------------- overflow handling --------------
+
+    cmp rax, INT32_MIN
+    jl .OVERFLOW
+    cmp rax, INT32_MAX
+    jg .OVERFLOW
 
 ; --------------- return states --------------
 
@@ -136,7 +142,7 @@ FT_ATOI_BASE:
     pop rdi ; and str
     mov rsp, rbp ; function epilogue
     pop rbp
-    ret
+    ret ; normal return
 
 .OVERFLOW:
     pop rsi ; restore base
@@ -155,7 +161,7 @@ FT_ATOI_BASE:
     mov rsp, rbp ; function epilogue
     pop rbp
     xor rax, rax
-    ret ; return NULL
+    ret ; return 0
 
 ; Prototype:
 ;   bool ft_isspace(int c)
