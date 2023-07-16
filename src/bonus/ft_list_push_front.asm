@@ -1,7 +1,8 @@
 section .text
-global ft_list_push_front
 
 %include "platform_specific.inc"
+
+global FT_LIST_PUSH_FRONT
 
 extern MALLOC
 
@@ -10,7 +11,8 @@ extern MALLOC
 ; Parameters:
 ;   list = rdi
 ;   data = rsi
-ft_list_push_front:
+
+FT_LIST_PUSH_FRONT:
     test rdi, rdi ; list == NULL
     jz .FAST_RETURN
 

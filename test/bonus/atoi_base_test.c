@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <limits.h>
+#include <errno.h>
 
 #include "libasm.h"
+#include "test.h"
 
 static bool my_isspace(int c) {
     return (c == ' ' ||
@@ -42,8 +45,12 @@ static bool validate_base(const char* base) {
     return true;
 }
 
-int my_atoi_base(const char* str, const char* base) {
-    if (str == NULL || base == NULL || !validate_base(base)) {
+static int my_atoi_base(const char* str, const char* base) {
+    if (str == NULL || base == NULL) {
+        return 0;
+    }
+    if (!validate_base(base)) {
+        errno = EINVAL;
         return 0;
     }
     const char* s = str;
@@ -59,25 +66,36 @@ int my_atoi_base(const char* str, const char* base) {
         }
         ++s;
     }
-    size_t result = 0;
+    size_t number = 0;
     for (size_t digit = 0; is_in_base(*s, base, &digit); ++s) {
-        result = (result * base_len) + digit;
+        number = (number * base_len) + digit;
     }
-    // maybe check for int overflow
-    return (int)result * sign;
+    long result = (long)number * sign;
+    if (result > INT_MAX || result < INT_MIN) {
+        errno = ERANGE;
+        return 0;
+    }
+    return (int)result;
 }
 
 void compare_atoi_base(char* num_string,
                        char* base) {
     printf("Testing with:\nnum_string = %s\nbase = %s\n", num_string, base);
+    errno = 0;
     int my_result = my_atoi_base(num_string, base);
+    int save_my_errno = errno;
+    errno = 0;
     int ft_result = ft_atoi_base(num_string, base);
+    int save_ft_errno = errno;
     printf("ft_atoi_base: %d\n", ft_result);
-    printf("reference_atoi_base: %d\n", my_result);
-    if (ft_result == 0) {
-        perror("errno");
+    if (save_ft_errno != 0) {
+        printf("errno = %d, %s\n", save_ft_errno, strerror(save_ft_errno));
     }
-    if (my_result == ft_result) {
+    printf("reference_atoi_base: %d\n", my_result);
+    if (save_my_errno != 0) {
+        printf("errno = %d, %s\n", save_my_errno ,strerror(save_my_errno));
+    }
+    if (my_result == ft_result && save_ft_errno == save_my_errno) {
         printf("%sTest passed!\n", BOLD_GREEN);
     } else {
         printf("%sTest failed!\n", BOLD_RED);
@@ -88,10 +106,10 @@ void compare_atoi_base(char* num_string,
 void atoi_base_test(void) {
     char decimal[] = "0123456789";
     char hex[] = "0123456789ABCDEF";
-    char octal[] = "012345678";
+    char octal[] = "01234567";
     char binary[] = "01";
 
-    printf("\n%s-------------------- atoi base test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
+    printf("\n\n%s-------------------- atoi base test ------------------------%s\n\n", BOLD_LIGHT_BLUE, RESET);
     compare_atoi_base("", "");
     compare_atoi_base("   111", "1");
     compare_atoi_base("0001", "121");
@@ -99,16 +117,12 @@ void atoi_base_test(void) {
     compare_atoi_base("100", decimal);
     compare_atoi_base("\t\f\v ++-+-30", hex);
     compare_atoi_base("\t\f\v \r+101010someting else", binary);
+    compare_atoi_base("\t\v\n   -100000000 hello world", binary);
+    compare_atoi_base("01234567", octal);
+    compare_atoi_base("1111111111111111111111111111111", binary);
+    compare_atoi_base("-2147483648", decimal);
+    compare_atoi_base("-2147483649", decimal);
+    compare_atoi_base("2147483648", decimal);
+    compare_atoi_base("21474836480", decimal);
+    compare_atoi_base("50000000000", decimal);
 }
-
-// int main(void) {
-
-//     compare_atoi_base("100", decimal, 100);
-//     compare_atoi_base("0", octal, 0);
-//     compare_atoi_base("      +++42", decimal, 42);
-//     compare_atoi_base("\t\f\v ++-+-30", hex, 48);
-//     compare_atoi_base(NULL, binary, 0);
-//     compare_atoi_base("something", "0", 0);
-//     compare_atoi_base("\t\f\v \r+101010someting else", binary, 42);
-//     // printf("%d\n", my_atoi_base("invalid", binary));
-// }

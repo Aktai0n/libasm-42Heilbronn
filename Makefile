@@ -12,7 +12,7 @@ ASFLAGS = -wall -iinc -g
 ifeq ($(OS), Darwin) # MacOS
 ASFLAGS += -f macho64 -dMACOS=1
 else ifeq ($(OS), Linux) # Linux
-ASFLAGS += -f elf64 -F dwarf -dLINUX=1
+ASFLAGS += -f elf64 -dLINUX=1
 else
 $(error Unsupported operating system: $(OS))
 endif
@@ -30,6 +30,18 @@ ARFLAGS = rcs
 # compiler config
 CC = cc
 CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
+
+COMPILER := $(shell $(CC) --version)
+
+# detect whether gcc or clang is being used
+# because clang prefixes functions with an underscore
+ifneq ($(or $(findstring GCC, $(COMPILER)), $(findstring gcc, $(COMPILER))),)
+ASFLAGS += -dCOMPILER=gcc
+else ifneq ($(or $(findstring clang, $(COMPILER)), $(findstring clang, $(COMPILER))),)
+ASFLAGS += -dCOMPILER=clang
+else
+$(error Unsupported compiler: $(COMPILER))
+endif
 
 # utils config
 RM = rm -rf

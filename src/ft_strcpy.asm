@@ -1,5 +1,8 @@
 section .text
-global ft_strcpy
+
+%include "platform_specific.inc"
+
+global FT_STRCPY
 
 ; Prototype: 
 ;   char* ft_strcpy(char* dest, const char* src)
@@ -7,7 +10,7 @@ global ft_strcpy
 ; dest = rdi
 ; src = rsi
 
-ft_strcpy:
+FT_STRCPY:
     xor rcx, rcx ; size_t i = 0
     mov rax, rdi ; prepare return value
     cmp BYTE [rsi], 0 ; *src == '\0'

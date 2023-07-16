@@ -1,7 +1,7 @@
 section .text
-global ft_read
-
 %include "platform_specific.inc"
+
+global FT_READ
 
 extern GET_ERRNO
 
@@ -12,19 +12,24 @@ extern GET_ERRNO
 ;   buf = rsi
 ;   size = rdx
 
-ft_read:
+FT_READ:
     mov rax, READ_SYSCALL_CODE
     syscall
-    test rax, rax ; check for read error
-    ; cmp rax, 0
+%ifdef MACOS
+    jc .SET_ERRNO
+%elifdef LINUX
+    test rax, rax ; check for write error
     jl .SET_ERRNO
+%endif
     ret
 
 .SET_ERRNO:
     push rbp ; function prologue
     mov rbp, rsp
 
+%ifdef LINUX
     neg rax ; negate rax to get the error code
+%endif
     push rax ; save the error code
     call GET_ERRNO
     pop rcx ; move the error code to rcx

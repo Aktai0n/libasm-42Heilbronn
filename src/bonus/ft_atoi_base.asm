@@ -1,9 +1,10 @@
 section .text
-global ft_atoi_base
 
 %include "platform_specific.inc"
 
-extern ft_strlen
+global FT_ATOI_BASE
+
+extern FT_STRLEN
 extern GET_ERRNO
 
 ; Prototype:
@@ -20,7 +21,7 @@ extern GET_ERRNO
 ;   rbp - 8 = copy of str
 ;   rbp - 16 = copy of base
 
-ft_atoi_base:
+FT_ATOI_BASE:
     push rbp ; function prologue
     mov rbp, rsp
 
@@ -33,7 +34,7 @@ ft_atoi_base:
     push rsi ; copy base to rbp - 16
 
     mov rdi, rsi
-    call ft_strlen ; get the len of base
+    call FT_STRLEN ; get the len of base
     mov r9, rax ; store base_len
     mov rdi, QWORD [rbp - 8] ; restore str
     mov rsi, QWORD [rbp - 16] ; and base
@@ -47,12 +48,11 @@ ft_atoi_base:
     .LOOP1:
         movzx edx, BYTE [rsi + rcx] ; c = base[i]
         cmp dl, 43 ; c == '+'
-        ; je .INVALID_BASE
+        je .INVALID_BASE
         cmp dl, 45 ; c == '-'
-        ; je .INVALID_BASE
+        je .INVALID_BASE
         mov edi, edx
         call ft_isspace
-        ; mov rdi, [rbp - 8] ; restore str <-- can probably be removed
         test al, al ; check base[i] for spacing character
         jnz .INVALID_BASE
 
@@ -67,7 +67,7 @@ ft_atoi_base:
             jl .LOOP2
 
         inc rcx ; ++i
-        cmp rcx, r9 ; i != base_len
+        cmp rcx, r9 ; i < base_len
         jl .LOOP1
 
 ; --------------- skip spacing characters --------------
@@ -117,18 +117,24 @@ ft_atoi_base:
             inc rdx ; ++digit
             jmp .LOOP6
         .BREAK6:
+
     
-        imul rax, r9 ; result * base_len
+        imul eax, r9d ; result * base_len
         jo .OVERFLOW
         add rax, rdx ; result + digit
-        jo .OVERFLOW
         inc rcx ; ++s
         cmp BYTE [rcx], 0 ; *s == '\0'
         jne .LOOP5
     .BREAK5:
 
     imul rax, r10 ; result * sign
-    jo .OVERFLOW
+
+; --------------- overflow handling --------------
+
+    cmp rax, INT32_MIN ; result < INT32_MIN
+    jl .OVERFLOW
+    cmp rax, INT32_MAX ; result > INT32_MAX
+    jg .OVERFLOW
 
 ; --------------- return states --------------
 
@@ -136,7 +142,7 @@ ft_atoi_base:
     pop rdi ; and str
     mov rsp, rbp ; function epilogue
     pop rbp
-    ret
+    ret ; normal return
 
 .OVERFLOW:
     pop rsi ; restore base
@@ -155,7 +161,7 @@ ft_atoi_base:
     mov rsp, rbp ; function epilogue
     pop rbp
     xor rax, rax
-    ret ; return NULL
+    ret ; return 0
 
 ; Prototype:
 ;   bool ft_isspace(int c)

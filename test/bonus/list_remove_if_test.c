@@ -3,7 +3,9 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "libasm.h"
 #include "./list/list.h"
+#include "test.h"
 
 static void print_string(void* ptr) {
     const char* str = ptr;
@@ -16,17 +18,21 @@ void compare_list_remove_if(t_list** list1,
                             cmp_func cmp,
                             free_func del,
                             print_func print) {
+#ifdef TEST_VERBOSE
     printf("Testing with:\n");
     ft_print_list(*list1, print);
     printf("To remove:\n");
     print(to_remove);
     printf("\n");
+#endif
     ft_list_remove_if(list1, to_remove, cmp, del);
     ft_listdel_pred(list2, to_remove, cmp, del);
+#ifdef TEST_VERBOSE
     printf("ft_list_remove_if:\n");
     ft_print_list(*list1, print);
     printf("reference_list_remove_if:\n");
     ft_print_list(*list2, print);
+#endif
     if (ft_listcmp(*list1, *list2, cmp) == 0) {
         printf("%sTest passed!\n", BOLD_GREEN);
     } else {
@@ -36,7 +42,7 @@ void compare_list_remove_if(t_list** list1,
 }
 
 void list_remove_if_test(void) {
-    printf("\n%s-------------------- list remove if test ------------------------%s\n", BOLD_LIGHT_BLUE, RESET);
+    printf("\n\n%s-------------------- list remove if test ------------------------%s\n\n", BOLD_LIGHT_BLUE, RESET);
 
     t_list* list1 = NULL;
     t_list* list2 = NULL;
