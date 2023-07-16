@@ -131,9 +131,9 @@ FT_ATOI_BASE:
 
 ; --------------- overflow handling --------------
 
-    cmp rax, INT32_MIN
+    cmp rax, INT32_MIN ; result < INT32_MIN
     jl .OVERFLOW
-    cmp rax, INT32_MAX
+    cmp rax, INT32_MAX ; result > INT32_MAX
     jg .OVERFLOW
 
 ; --------------- return states --------------
