@@ -6,16 +6,12 @@
 #include "./list/list.h"
 #include "test.h"
 
-static void print_string(void* ptr) {
-    const char* str = ptr;
-    printf("%s", str);
-}
-
 void compare_list_push_front(t_list** list1,
                              t_list** list2,
                              void* data_to_add,
                              size_t data_len,
                              print_func print) {
+    (void)print;
     t_list* save_list1_head = *list1;
 #ifdef TEST_VERBOSE
     printf("Testing with:\n");

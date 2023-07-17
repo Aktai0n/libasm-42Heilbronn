@@ -7,17 +7,13 @@
 #include "./list/list.h"
 #include "test.h"
 
-static void print_string(void* ptr) {
-    const char* str = ptr;
-    printf("%s", str);
-}
-
 void compare_list_remove_if(t_list** list1,
                             t_list** list2,
                             void* to_remove,
                             cmp_func cmp,
                             free_func del,
                             print_func print) {
+    (void)print;
 #ifdef TEST_VERBOSE
     printf("Testing with:\n");
     ft_print_list(*list1, print);

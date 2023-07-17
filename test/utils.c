@@ -5,6 +5,11 @@
 
 #include "test.h"
 
+void print_string(void* ptr) {
+    const char* str = ptr;
+    printf("%s", str);
+}
+
 void print_file(int fd, FILE* output) {
     struct stat status = {0};
     if (fstat(fd, &status) == -1) {

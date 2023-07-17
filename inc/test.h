@@ -32,5 +32,6 @@ void list_remove_if_test(void);
 
 void print_file(int fd, FILE* output);
 char* read_file(int fd);
+void print_string(void* ptr);
 
 #endif // TEST_H

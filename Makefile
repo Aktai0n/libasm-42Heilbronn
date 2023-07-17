@@ -2,8 +2,10 @@
 # -------------------- config -------------------------
 
 NAME := libasm.a
+TESTER_NAME := tester
 
 OS := $(shell uname -s)
+
 
 # assembler config
 AS = nasm
@@ -30,6 +32,10 @@ ARFLAGS = rcs
 # compiler config
 CC = cc
 CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
+
+ifneq ($(VERBOSE),)
+CFLAGS += -DTEST_VERBOSE=1
+endif
 
 COMPILER := $(shell $(CC) --version)
 
@@ -75,7 +81,6 @@ OBJ = $(patsubst $(SDIR)/%.asm, $(ODIR)/%.o, $(SRC_FULL))
 TEST_DIR = test
 # TEST_SRC = $(wildcard $(TEST_DIR)/*.c)
 TEST_SRC = $(shell find $(TEST_DIR) -type f -name "*.c")
-TESTER_NAME := tester
 
 # -------------------- public rules ---------------------
 
@@ -92,14 +97,13 @@ fclean: clean
 	$(RM) $(NAME)
 	$(RM) $(TESTER_NAME)
 
-re: fclean all
+re: fclean test
 
 bonus: all
 
 # test: CFLAGS += -DLIBASM_BONUS=1
 test: all
 	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(OBJ) -o $(TESTER_NAME)
-#	$(shell bash $(TEST_DIR)/run.sh)
 
 
 .PHONY: $(NAME) all clean fclean re bonus

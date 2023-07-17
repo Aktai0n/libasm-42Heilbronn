@@ -8,11 +8,6 @@
 #include "./list/list.h"
 #include "test.h"
 
-static void print_string(void* ptr) {
-    const char* str = ptr;
-    printf("%s", str);
-}
-
 static bool list_is_sorted(const t_list* restrict list, cmp_func cmp) {
     if (list == NULL) {
         return true;
@@ -31,6 +26,7 @@ void compare_list_sort(t_list** list1,
                        t_list** list2,
                        cmp_func cmp,
                        print_func print) {
+    (void)print;
 #ifdef TEST_VERBOSE
     printf("Testing with\n");
     ft_print_list(*list1, print);

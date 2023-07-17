@@ -6,11 +6,6 @@
 #include "list/list.h"
 #include "test.h"
 
-static void print_string(void* ptr) {
-    const char* str = ptr;
-    printf("%s", str);
-}
-
 void compare_list_size(t_list* list) {
 #ifdef TEST_VERBOSE
     printf("Testing with:\n");
