@@ -74,6 +74,72 @@ A reference with the most commonly used x86_64 instructions and paradigms can be
 
 [1]: <https://treeniks.github.io/x86-64-simplified/prefix.html> "x86_64 simplified"
 
+#### Registers:
+
+In assembly you work with `registers`. Those are (in x64) 64-bit wide memory spaces where values can be stored.<br>
+
+There are 16 Registers:
+
+```asm
+
+rax, rbx, rcx, rdx, rdi, rsi, rbp, rsp, r8 - r15
+
+```
+
+According to the calling convention they can be divided into volitaile and non-volitile registers.<br>
+
+Volitile registers are:
+
+```asm
+
+rax, rcx, rdx, r8 - r11
+
+```
+
+And non-volitile registers:
+
+```asm
+
+rbx, rdi, rsi, rbp, rsp, r12 - r15
+
+```
+
+Some of the registers are used for specific purposes:
+
+- `rsp` Holds the value of the stack pointer
+
+- `rax` Holds the return value of a function call
+
+- `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9` Used to pass the 1st to 6th parameter to functions - in this exact order. Further function arguments are passed on the stack.
+
+- `rbp` is often used to save the value of `rsp` upon function start. That's why it's often referred to as base pointer.
+
+ 
+
+### Program structure:
+
+Every instruction is divided into an instruction and the registers or memory regions that are affected by it. E.g.:
+
+ 
+
+```s
+
+mov     rax, 0
+
+```
+
+^^^^^^ <br>
+
+instruction
+
+ 
+
+### Branching:
+
+There are neither conditional statements like `if`, `else if` and `else` nor classic loops like `for` or `while` in assembly.
+
+Instead those are replaced by `jumps`
+
 ## Resources:
 https://en.wikipedia.org/wiki/X86-64#
 https://en.wikipedia.org/wiki/X86_calling_conventions#
