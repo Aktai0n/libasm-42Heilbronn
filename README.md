@@ -70,75 +70,106 @@ More information about each function can be found at [inc/libasm.h](./inc/libasm
 
 ## Assembly quick reference:
 
-A reference with the most commonly used x86_64 instructions and paradigms can be found [here][1]
+*Note: This only applies to the [x86_64 System V calling convention][2] used in this project*
 
-[1]: <https://treeniks.github.io/x86-64-simplified/prefix.html> "x86_64 simplified"
+A reference with the most commonly used x86_64 instructions and paradigms can be found [here][1]<br><br>
 
-#### Registers:
+### Registers:
 
-In assembly you work with `registers`. Those are (in x64) 64-bit wide memory spaces where values can be stored.<br>
+In assembly you work with `registers`. Those are (since the introduction of x64) 64-bit wide memory spaces where values can be stored.<br>
 
 There are 16 Registers:
 
 ```asm
 
-rax, rbx, rcx, rdx, rdi, rsi, rbp, rsp, r8 - r15
+rax, rbx, rcx, rdx, rdi, rsi, rbp, rsp, r8, r9 ... r15
 
 ```
 
-According to the calling convention they can be divided into volitaile and non-volitile registers.<br>
+These can be divided into [volatile][3] and [non-volatile][4] registers.<br>
 
-Volitile registers are:
+Volatile registers are:
 
 ```asm
 
-rax, rcx, rdx, r8 - r11
+rax, rcx, rdx, r8 ... r11
 
 ```
 
-And non-volitile registers:
+The rest of them are non-volatile:
 
 ```asm
 
-rbx, rdi, rsi, rbp, rsp, r12 - r15
+rbx, rdi, rsi, rbp, rsp, r12 ... r15
 
 ```
 
-Some of the registers are used for specific purposes:
+Furthermore, some of the registers are used for specific purposes:
 
-- `rsp` Holds the value of the stack pointer
+- `rsp`: Holds the value of the stack pointer
 
-- `rax` Holds the return value of a function call
+- `rax`: Holds the return value of a function call
 
-- `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9` Used to pass the 1st to 6th parameter to functions - in this exact order. Further function arguments are passed on the stack.
+- `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9`: Used to pass the 1st to 6th parameter to functions - in this exact order. Further function arguments are passed on the stack.
 
-- `rbp` is often used to save the value of `rsp` upon function start. That's why it's often referred to as base pointer.
+- `rbp`: Often used to save the value of `rsp` upon function entry and restore the value of `rsp` upon function exit. That's why it's often referred to as base pointer.
+- `EFLAGS`: A special kind of register that is rarely set directly. Instead it holds specific [flags][5] that will be set / reset by comparison operations and read by conditional instructions.
 
- 
+[1]: <https://treeniks.github.io/x86-64-simplified/prefix.html> "x86_64 simplified"
+[2]: <https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI> "x86_64 System V calling convention"
+[3]: <https://en.wikipedia.org/wiki/X86_calling_conventions#Caller-saved_(volatile)_registers>
+[4]: <https://en.wikipedia.org/wiki/X86_calling_conventions#Callee-saved_(non-volatile)_registers>
+[5]: <https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-phpapp02/95/assembly-language-programmingunit-4-28-728.jpg?cb=1320545565> "Layout of EFLAGS"
 
 ### Program structure:
 
-Every instruction is divided into an instruction and the registers or memory regions that are affected by it. E.g.:
+Every line of code is divided into an instruction and the registers or memory regions that are affected by it. E.g.:
 
  
 
-```s
-
-mov     rax, 0
-
+```s &nbsp;
+    mov                rax, 0
+    ^^^                ^^^^^^
+instruction      affected register(s)
 ```
-
-^^^^^^ <br>
-
-instruction
-
- 
+Pointers are dereferenced by putting the register between [] and specifying how many bytes should be read from the pointer:
+```s
+mov BYTE [rax], 0 ; move zero into the Byte that rax points to
+```
+is equivalent to the C code of:
+```C
+*(char*)str = '\0' // assuming that str points to a valid memory address
+```
 
 ### Branching:
 
-There are neither conditional statements like `if`, `else if` and `else` nor classic loops like `for` or `while` in assembly.
-
-Instead those are replaced by `jumps`
+Conditional statements and loops are represented through `jumps` in assembly.<br>
+They work by jumping to a `label` that is somewhere else in the program:
+```s
+...
+jmp .LABEL
+mov rax, 0 ; <------- this line of code will never be executed
+.LABEL:
+...
+```
+`If` statements are achived by comparing registers and using conditional jumps:
+```s
+...
+test rax, rax       ; test the value in rax
+jz .LABEL           ; jump to LABEL if the value in rax is zero
+mov rax, 0          ; set rax to zero if it wasn't before
+.LABEL:
+...
+```
+`Loops` are achived by comparing registers and using conditional jumps to jump back in the program flow:
+```s
+mov rdx, 10
+mov rcx, 0
+.LOOP:
+add rcx, 1          ; add one to rcx
+cmp rcx, rdx        ; compare the value in rcx to rdx
+jl .LOOP            ; jump back to .LOOP while the value in rcx < rdx
+```
 
 ## Resources:
 https://en.wikipedia.org/wiki/X86-64#
@@ -150,5 +181,4 @@ https://www.nasm.us/doc/nasmdoc0.html
 https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-phpapp02/95/assembly-language-programmingunit-4-28-728.jpg?cb=1320545565
 https://man7.org/linux/man-pages/man2/syscall.2.html
 https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
-https://www.youtube.com/watch?v=GV10eIuPs9k&t=403s
 https://blog.packagecloud.io/the-definitive-guide-to-linux-system-calls/

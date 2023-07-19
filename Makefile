@@ -9,7 +9,7 @@ OS := $(shell uname -s)
 
 # assembler config
 AS = nasm
-ASFLAGS = -wall -iinc -g
+ASFLAGS = -wall -iinc
 
 ifeq ($(OS), Darwin) # MacOS
 ASFLAGS += -f macho64 -dMACOS=1
@@ -31,7 +31,7 @@ ARFLAGS = rcs
 
 # compiler config
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Wconversion -g3 #-Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Wconversion #-Werror
 
 ifneq ($(VERBOSE),)
 CFLAGS += -DTEST_VERBOSE=1
