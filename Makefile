@@ -43,7 +43,7 @@ COMPILER := $(shell $(CC) --version)
 # because clang prefixes functions with an underscore
 ifneq ($(or $(findstring GCC, $(COMPILER)), $(findstring gcc, $(COMPILER))),)
 ASFLAGS += -dCOMPILER=gcc
-else ifneq ($(or $(findstring clang, $(COMPILER)), $(findstring clang, $(COMPILER))),)
+else ifneq ($(or $(findstring CLANG, $(COMPILER)), $(findstring clang, $(COMPILER))),)
 ASFLAGS += -dCOMPILER=clang
 else
 $(error Unsupported compiler: $(COMPILER))
@@ -103,7 +103,7 @@ bonus: all
 
 # test: CFLAGS += -DLIBASM_BONUS=1
 test: all
-	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(OBJ) -o $(TESTER_NAME)
+	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(NAME) -o $(TESTER_NAME)
 
 
 .PHONY: $(NAME) all clean fclean re bonus

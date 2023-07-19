@@ -1,8 +1,8 @@
 # libasm-42Heilbronn
-The goal of libasm is yo get familiar with X86_64 assembly by working with strings, numbers, functions, function pointers, and structures (linked lists) in nasm.
+The goal of libasm is yo get familiar with x86_64 assembly by working with strings, numbers, functions, function pointers, and structures (linked lists) in nasm.
 
 1. [Usage](#usage)
-2. [Sneek-Peek into assembly](#sneek-peek-into-assembly)
+2. [Assembly quick reference](#assembly-quick-reference)
 3. [Overview](#overview)
 4. [Resources](#resources)
 # note to self: change .asm to .s before submitting!
@@ -72,9 +72,9 @@ More information about each function can be found at [inc/libasm.h](./inc/libasm
 
 *Note: This only applies to the [x86_64 System V calling convention][2] used in this project*
 
-A reference with the most commonly used x86_64 instructions and paradigms can be found [here][1]<br><br>
+A reference with the most commonly used x86_64 instructions and paradigms can be found [here][1].<br><br>
 
-### Registers:
+### **Registers:**
 
 In assembly you work with `registers`. Those are (since the introduction of x64) 64-bit wide memory spaces where values can be stored.<br>
 
@@ -113,7 +113,7 @@ Furthermore, some of the registers are used for specific purposes:
 - `rdi`, `rsi`, `rdx`, `rcx`, `r8`, `r9`: Used to pass the 1st to 6th parameter to functions - in this exact order. Further function arguments are passed on the stack.
 
 - `rbp`: Often used to save the value of `rsp` upon function entry and restore the value of `rsp` upon function exit. That's why it's often referred to as base pointer.
-- `EFLAGS`: A special kind of register that is rarely set directly. Instead it holds specific [flags][5] that will be set / reset by comparison operations and read by conditional instructions.
+- `EFLAGS`: A special register that is rarely set directly. Instead it holds specific [flags][5] that will be set / reset by comparison operations and read by conditional instructions.
 
 [1]: <https://treeniks.github.io/x86-64-simplified/prefix.html> "x86_64 simplified"
 [2]: <https://en.wikipedia.org/wiki/X86_calling_conventions#System_V_AMD64_ABI> "x86_64 System V calling convention"
@@ -121,27 +121,24 @@ Furthermore, some of the registers are used for specific purposes:
 [4]: <https://en.wikipedia.org/wiki/X86_calling_conventions#Callee-saved_(non-volatile)_registers>
 [5]: <https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-phpapp02/95/assembly-language-programmingunit-4-28-728.jpg?cb=1320545565> "Layout of EFLAGS"
 
-### Program structure:
+### **Program structure:**
 
 Every line of code is divided into an instruction and the registers or memory regions that are affected by it. E.g.:
-
- 
-
 ```s &nbsp;
     mov                rax, 0
     ^^^                ^^^^^^
 instruction      affected register(s)
 ```
-Pointers are dereferenced by putting the register between [] and specifying how many bytes should be read from the pointer:
+Pointers are dereferenced by putting the register the pointer is stored in between [] and specifying how many bytes should be read from the pointer:
 ```s
 mov BYTE [rax], 0 ; move zero into the Byte that rax points to
 ```
 is equivalent to the C code of:
 ```C
-*(char*)str = '\0' // assuming that str points to a valid memory address
+*(char*)str = '\0'; // assuming that str points to a valid memory address
 ```
 
-### Branching:
+### **Branching:**
 
 Conditional statements and loops are represented through `jumps` in assembly.<br>
 They work by jumping to a `label` that is somewhere else in the program:
@@ -172,13 +169,12 @@ jl .LOOP            ; jump back to .LOOP while the value in rcx < rdx
 ```
 
 ## Resources:
-https://en.wikipedia.org/wiki/X86-64#
-https://en.wikipedia.org/wiki/X86_calling_conventions#
-https://gist.github.com/yellowbyte/d91da3c3b0bc3ee6d1d1ac5327b1b4b2
-https://web.stanford.edu/class/cs107/resources/x86-64-reference.pdf
-https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html
-https://www.nasm.us/doc/nasmdoc0.html
-https://image.slidesharecdn.com/assemblylanguageprogrammingunit4-111106021136-phpapp02/95/assembly-language-programmingunit-4-28-728.jpg?cb=1320545565
-https://man7.org/linux/man-pages/man2/syscall.2.html
-https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/
-https://blog.packagecloud.io/the-definitive-guide-to-linux-system-calls/
+- [hands down the best reference for this project][1]
+- [wikipedia on x86_64](https://en.wikipedia.org/wiki/X86-64#)
+- [wikipedia on x86_64 System V AMD64 ABI calling convention][2]
+- [how to transform assembly code into an executable](https://gist.github.com/yellowbyte/d91da3c3b0bc3ee6d1d1ac5327b1b4b2)
+- [nasm cheat sheet](https://www.cs.uaf.edu/2017/fall/cs301/reference/x86_64.html)
+- [official nasm documentation](https://www.nasm.us/doc/nasmdoc0.html)
+- [what are syscalls (long read but very informative)](https://blog.packagecloud.io/the-definitive-guide-to-linux-system-calls/)
+- [system call table for x86_64](https://blog.rchapman.org/posts/Linux_System_Call_Table_for_x86_64/)
+- [all x86_64 instructions out there](https://www.felixcloutier.com/x86/)
