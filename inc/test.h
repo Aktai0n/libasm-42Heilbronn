@@ -6,7 +6,7 @@
 #include <stdio.h>
 
 #ifndef TESTFILE_NAME
-#define TESTFILE_NAME "testfile.txt"
+#define TESTFILE_NAME "test/testfile.txt"
 #endif
 
 // #ifndef TEST_VERBOSE
