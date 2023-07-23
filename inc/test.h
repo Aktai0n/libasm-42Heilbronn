@@ -9,10 +9,6 @@
 #define TESTFILE_NAME "test/testfile.txt"
 #endif
 
-// #ifndef TEST_VERBOSE
-// #define TEST_VERBOSE 1
-// #endif
-
 
 void strcmp_test(void);
 void strcpy_test(void);

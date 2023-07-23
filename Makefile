@@ -84,7 +84,7 @@ TEST_SRC = $(shell find $(TEST_DIR) -type f -name "*.c")
 
 # -------------------- public rules ---------------------
 
-$(NAME): $(ODIR) $(OBJ)
+$(NAME): $(OBJ)
 	$(AR) $(ARFLAGS) $@ $(OBJ)
 
 
@@ -101,12 +101,11 @@ re: fclean test
 
 bonus: all
 
-# test: CFLAGS += -DLIBASM_BONUS=1
 test: all
 	$(CC) $(CFLAGS) -I$(IDIR) $(TEST_SRC) $(NAME) -o $(TESTER_NAME)
 
 
-.PHONY: $(NAME) all clean fclean re bonus
+.PHONY: all clean fclean re bonus test
 
 # -------------------- util rules -----------------------
 
@@ -114,5 +113,5 @@ test: all
 $(ODIR):
 	$(MKDIR) $(patsubst $(SDIR)/%, $(ODIR)/% , $(shell find $(SDIR)/ -type d))
 
-$(ODIR)/%.o: $(SDIR)/%.asm
+$(ODIR)/%.o: $(SDIR)/%.asm | $(ODIR)
 	$(AS) $(ASFLAGS) $< -o $@ -I $(IDIR)
