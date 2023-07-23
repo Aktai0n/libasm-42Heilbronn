@@ -14,7 +14,7 @@
 #define BOLD_GREEN "\033[1m\033[32m"
 #define BOLD_LIGHT_BLUE "\033[1m\033[94m"
 
-#define LIBASM_BONUS // Remove me!!!
+#define LIBASM_BONUS
 
 /// @brief counts the number of characters in str
 ///        until it reaches a null character '\0'

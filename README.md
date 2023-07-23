@@ -2,8 +2,8 @@
 The goal of libasm is yo get familiar with x86_64 assembly by working with strings, numbers, functions, function pointers, and structures (linked lists) in nasm.
 
 1. [Usage](#usage)
-2. [Assembly quick reference](#assembly-quick-reference)
-3. [Overview](#overview)
+2. [Overview](#overview)
+3. [Assembly quick reference](#assembly-quick-reference)
 4. [Resources](#resources)
 # note to self: change .asm to .s before submitting!
 
