@@ -21,11 +21,10 @@ FT_STRDUP:
     jz .RETURN_ZERO
 
     push rbx ; save rbx
-    mov rbx, rdi ; save the string pointer
     push rsi ; save rsi
+    mov rbx, rdi ; save the string pointer
 
     call FT_STRLEN
-    push rax ; save the length
     lea rdi, [rax + 1] ; bytes to allocate = len + 1
     call MALLOC
     test rax, rax ; dest == NULL
@@ -34,8 +33,6 @@ FT_STRDUP:
     mov rdi, rax ; copy dest = dest
     mov rsi, rbx ; copy src = str
     call FT_STRCPY
-    pop rcx ; restore the length
-    mov BYTE [rax + rcx], 0 ; dest[len] = '\0'
 
     pop rsi ; restore rsi
     pop rbx ; restore rbx
@@ -46,7 +43,7 @@ FT_STRDUP:
 
 
 .MALLOC_FAILED:
-    add rsp, 8 ; reset the stack and registers
+    add rsp, 16 ; reset the stack and registers
     pop rsi
     pop rbx
 

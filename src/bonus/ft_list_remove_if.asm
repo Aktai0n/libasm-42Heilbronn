@@ -41,6 +41,7 @@ FT_LIST_REMOVE_IF:
     push r13
     push r14
     push r15
+    add rsp, 8 ; align the stack to 16 bytes
 
     mov r14, rdx
     mov r15, rcx
@@ -71,6 +72,7 @@ FT_LIST_REMOVE_IF:
 
             mov rdi, QWORD [rbx]
             call r15 ; free_func(it->data)
+    
             mov rdi, rbx
             call FREE ; free(it)
             xor rbx, rbx ; it = NULL
@@ -82,6 +84,7 @@ FT_LIST_REMOVE_IF:
         jnz .LOOP1
     .BREAK1:
 
+    sub rsp, 8
     pop r15 ; restore registers
     pop r14
     pop r13
