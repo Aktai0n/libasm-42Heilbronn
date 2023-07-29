@@ -72,7 +72,6 @@ FT_LIST_REMOVE_IF:
 
             mov rdi, QWORD [rbx]
             call r15 ; free_func(it->data)
-    
             mov rdi, rbx
             call FREE ; free(it)
             xor rbx, rbx ; it = NULL

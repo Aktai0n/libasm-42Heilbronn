@@ -41,7 +41,6 @@ FT_STRDUP:
     pop rbp
     ret
 
-
 .MALLOC_FAILED:
     add rsp, 16 ; reset the stack and registers
     pop rsi
