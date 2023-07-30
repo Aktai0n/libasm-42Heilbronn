@@ -1,5 +1,5 @@
-# libasm-42Heilbronn
-The goal of libasm is yo get familiar with x86_64 assembly by working with strings, numbers, functions, function pointers, and structures (linked lists) in nasm.
+# libasm
+The goal of libasm is to get familiar with x86_64 assembly by working with strings, numbers, functions, function pointers, and structures (linked lists) in nasm.
 
 1. [Usage](#usage)
 2. [Overview](#overview)

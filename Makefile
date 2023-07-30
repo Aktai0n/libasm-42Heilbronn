@@ -22,7 +22,6 @@ endif
 
 # linker config
 LD = ld
-# -m elf_i386 = architecture
 LDFLAGS = 
 
 # archive (library) config
@@ -31,7 +30,7 @@ ARFLAGS = rcs
 
 # compiler config
 CC = cc
-CFLAGS = -Wall -Wextra -Wpedantic -Wconversion #-Werror
+CFLAGS = -Wall -Wextra -Wpedantic -Wconversion
 
 ifneq ($(VERBOSE),)
 CFLAGS += -DTEST_VERBOSE=1
@@ -79,7 +78,6 @@ ODIR = build
 OBJ = $(patsubst $(SDIR)/%.asm, $(ODIR)/%.o, $(SRC_FULL))
 
 TEST_DIR = test
-# TEST_SRC = $(wildcard $(TEST_DIR)/*.c)
 TEST_SRC = $(shell find $(TEST_DIR) -type f -name "*.c")
 
 # -------------------- public rules ---------------------
