@@ -5,7 +5,6 @@ The goal of libasm is yo get familiar with x86_64 assembly by working with strin
 2. [Overview](#overview)
 3. [Assembly quick reference](#assembly-quick-reference)
 4. [Resources](#resources)
-# note to self: change .asm to .s before submitting!
 
 
 ## Usage:
